@@ -1054,7 +1054,578 @@ class EternityTechGame {
                         action: () => this.completeChapter(2)
                     }
                 }
+            },
+            3: {
+            title: "The Arora Gambit",
+            location: "Mumbai - Chase Sequence",
+            scenes: {
+                1: {
+                    title: "Under Siege - Eternity Tech Office",
+                    dialogues: [
+                        { character: "Sakshi", text: "Our life's work... destroyed by lies.", emotion: "frustrated" },
+                        { character: "Krishna", text: "Truth will emerge. But first, we survive.", emotion: "determined" },
+                        { character: "Ramesh", text: "Sir, back exit is clear. But police coming soon.", emotion: "loyal" },
+                        { character: "Krishna", text: "Ramesh bhai, thank you. Take care of our employees.", emotion: "grateful" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(3, 2)
+                },
+                2: {
+                    title: "Chase Through Dharavi",
+                    dialogues: [
+                        { character: "Viren's Agent", text: "Target spotted! Sector 7!", emotion: "radio" },
+                        { character: "Krishna", text: "Remember our college parkour training?", emotion: "urgent" },
+                        { character: "Sakshi", text: "I was always faster than you!", emotion: "grinning" },
+                        { character: "Local Kid", text: "Uncle, this way! Police nahi jayenge!", emotion: "helpful" },
+                        { character: "Krishna", text: "धन्यवाद, बेटा!", emotion: "grateful" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(3, 3)
+                },
+                3: {
+                    title: "Hideout in Ancient Temple",
+                    dialogues: [
+                        { character: "Sakshi", text: "Bhai, I'm scared. What if our technology really does get misused?", emotion: "worried" },
+                        { character: "Krishna", text: "Every discovery can be weapon or blessing. Depends on who holds it.", emotion: "serious" },
+                        { character: "Sakshi", text: "Then we make sure right people hold it.", emotion: "determined" },
+                        { character: "Krishna", text: "Promise. Knowledge belongs to humanity, not to those who would cage it for profit.", emotion: "solemn" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(3, 4)
+                },
+                4: {
+                    title: "Laxman's Video Call",
+                    dialogues: [
+                        { character: "Laxman", text: "Yaar Krishna! News mein dekha. Are you both okay?", emotion: "concerned" },
+                        { character: "Krishna", text: "Alive, but barely. Laxman, we need to go to Kerala.", emotion: "serious" },
+                        { character: "Laxman", text: "Kerala? For vacation? At this time?", emotion: "surprised" },
+                        { character: "Sakshi", text: "It's complicated, Laxman bhaiya.", emotion: "smiling" },
+                        { character: "Laxman", text: "Whatever it is, I'm with you. Sole Mate has transport network all over South India. Use it.", emotion: "supportive" },
+                        { character: "Laxman", text: "Emergency alert system. If you're in trouble, press button twice. I'll come running.", emotion: "serious" },
+                        { character: "Krishna", text: "True friend. सच्चा मित्र।", emotion: "emotional" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(3, 5)
+                },
+                5: {
+                    title: "Departure Decision",
+                    dialogues: [
+                        { character: "Sakshi", text: "Once we board this train, there's no going back.", emotion: "nervous" },
+                        { character: "Krishna", text: "Parth ji died for this truth. We finish his mission.", emotion: "determined" },
+                        { character: "Station Announcement", text: "Kerala Express departing Platform 3!", emotion: "announcement" },
+                        { character: "Krishna", text: "हे भगवान, guide us on this path. Protect us, protect the knowledge, protect humanity.", emotion: "praying" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(4, 1)
+                }
             }
+        } ,
+
+        4: {
+            title: "Backwater Mysteries",
+            location: "Kerala Journey",
+            scenes: {
+                1: {
+                    title: "Train Journey - Dawn",
+                    dialogues: [
+                        { character: "Sakshi", text: "Padmanabhaswamy Temple... 1750, Maharaja Marthanda Varma dedicated entire kingdom to Lord Vishnu.", emotion: "reading" },
+                        { character: "Krishna", text: "And Vault B... unopened for centuries. What were they protecting?", emotion: "curious" },
+                        { character: "Fellow Passenger", text: "You're going to Anantha Padmanabha Swamy? पवित्र स्थान है (Sacred place).", emotion: "friendly" },
+                        { character: "Krishna", text: "Uncle, you know the temple?", emotion: "inquiring" },
+                        { character: "Old Man", text: "My grandfather was priest there. He used to say, 'कुछ रहस्य खुलने के लिए नहीं हैं' (Some mysteries aren't meant to be opened).", emotion: "mysterious" },
+                        { character: "Sakshi", text: "Why?", emotion: "curious" },
+                        { character: "Old Man", text: "Because when gods hide something, they have good reason.", emotion: "serious" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(4, 2)
+                },
+                2: {
+                    title: "Backwaters - Stunning Visuals",
+                    dialogues: [
+                        { character: "Krishna", text: "Look at this beauty, Sakshi. Our ancestors chose perfect places for temples.", emotion: "amazed" },
+                        { character: "Sakshi", text: "Every location has cosmic significance. Temple isn't just building—it's spiritual technology.", emotion: "explaining" },
+                        { character: "Boatman Raman", text: "Saab, temple has many stories. Some true, some... difficult to believe.", emotion: "accented" },
+                        { character: "Krishna", text: "Like what?", emotion: "curious" },
+                        { character: "Raman", text: "They say Vault B has divine protection. Those who tried to open it... वे वापस नहीं आए (They never returned).", emotion: "ominous" },
+                        { character: "Viren", text: "Enjoying the scenic route, Mr. Patil? I have people everywhere.", emotion: "menacing" },
+                        { character: "Krishna", text: "We're not afraid of you.", emotion: "defiant" },
+                        { character: "Viren", text: "You should be. Check your social media.", emotion: "threatening" },
+                        { character: "Sakshi", text: "Our reputation... destroyed.", emotion: "distressed" },
+                        { character: "Krishna", text: "Reputation can be rebuilt. Truth is eternal.", emotion: "determined" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(4, 3)
+                },
+                3: {
+                    title: "Meeting Dr. Meenakshi Iyer",
+                    dialogues: [
+                        { character: "Dr. Meenakshi Iyer", text: "Krishna beta, Sakshi beta, I knew your arrival was destined.", emotion: "warm" },
+                        { character: "Sakshi", text: "Namaskar, Doctor aunty. How did you know?", emotion: "respectful" },
+                        { character: "Dr. Iyer", text: "Dreams. For three nights, I saw two young scholars coming to protect sacred knowledge.", emotion: "mysterious" },
+                        { character: "Krishna", text: "We need to understand Vault B. What's really inside?", emotion: "inquiring" },
+                        { character: "Dr. Iyer", text: "Not treasure, beta. Knowledge that could heal world... or destroy it. Ancient medical treatise—molecular level healing.", emotion: "serious" },
+                        { character: "Sakshi", text: "Our ancestors knew molecular medicine?", emotion: "amazed" },
+                        { character: "Dr. Iyer", text: "They knew everything. But they also knew human nature. That's why protections exist.", emotion: "serious" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(4, 4)
+                },
+                4: {
+                    title: "The Supernatural Warning",
+                    dialogues: [
+                        { character: "Dr. Iyer", text: "Temple has guardians—not just human. Divine protectors.", emotion: "serious" },
+                        { character: "Krishna", text: "Like what?", emotion: "skeptical" },
+                        { character: "Dr. Iyer", text: "Nagas (serpents), Devas... and Hanuman ji himself watches over it.", emotion: "serious" },
+                        { character: "Sakshi", text: "Just like in Mumbai temple...", emotion: "whispering" },
+                        { character: "Dr. Iyer", text: "You've seen him, haven't you? Hanuman ji?", emotion: "knowing" },
+                        { character: "Krishna", text: "How did you know?", emotion: "amazed" },
+                        { character: "Dr. Iyer", text: "Because you're still alive. He's protecting you for this mission.", emotion: "serious" },
+                        { character: "Dr. Iyer", text: "Storm coming. Like the one brewing in your destiny.", emotion: "ominous" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(5, 1)
+                }
+            }
+        },
+
+        5: {
+            title: "The City of Temples",
+            location: "Thiruvananthapuram Exploration",
+            scenes: {
+                1: {
+                    title: "City Streets - Morning",
+                    dialogues: [
+                        { character: "Sakshi", text: "Three artifacts we need—Shankh, Yantra, and Palm manuscript. Scattered across city.", emotion: "focused" },
+                        { character: "Krishna", text: "Like a treasure hunt designed by our ancestors.", emotion: "intrigued" },
+                        { character: "Auto Driver Krishnan", text: "Where to, saab? You look like scholars!", emotion: "friendly" },
+                        { character: "Krishna", text: "Government Oriental Manuscript Library.", emotion: "determined" },
+                        { character: "Krishnan", text: "Ah! You study ancient knowledge! बहुत अच्छा (Very good)! Our culture needs young people like you.", emotion: "proud" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(5, 2)
+                },
+                2: {
+                    title: "Manuscript Library - Puzzle Sequence",
+                    dialogues: [
+                        { character: "Librarian", text: "Why do you need Chakra Yantra manuscript specifically?", emotion: "suspicious" },
+                        { character: "Sakshi", text: "Research on astronomical alignments in temple architecture.", emotion: "confident" },
+                        { character: "Krishna", text: "गणेशाय नमः... starts with Ganesha prayer, then follows Vedic sequence...", emotion: "solving" },
+                        { character: "Sakshi", text: "Got it! The manuscript!", emotion: "excited" }
+                    ],
+                    puzzle: {
+                        type: "sanskrit_sequence",
+                        title: "Arrange Vedic Verses",
+                        description: "Arrange the Sanskrit verses in correct order to access hidden compartment",
+                        items: ["गणेशाय नमः", "सरस्वत्यै नमः", "विद्यायै नमः", "दानायै नमः"]
+                    },
+                    action: () => this.startChapterScene(5, 3)
+                },
+                3: {
+                    title: "Spice Market Chase",
+                    dialogues: [
+                        { character: "Sakshi", text: "According to manuscript, Shankh is hidden in 'fragrance temple'.", emotion: "alert" },
+                        { character: "Spice Merchant", text: "Looking for something special, beta?", emotion: "helpful" },
+                        { character: "Krishna", text: "Ancient conch shell, family heirloom.", emotion: "explaining" },
+                        { character: "Agent 1", text: "There! Target acquired!", emotion: "alert" },
+                        { character: "Sakshi", text: "My size has advantages!", emotion: "sliding" },
+                        { character: "Krishna", text: "So does mine!", emotion: "swinging" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(5, 4)
+                },
+                4: {
+                    title: "Planetarium - Sakshi's Moment",
+                    dialogues: [
+                        { character: "Sakshi", text: "Bhai, this is where I shine. Vedic astronomy is my specialty.", emotion: "confident" },
+                        { character: "Planetarium Director", text: "Young lady, can you really calculate planetary positions without computer?", emotion: "skeptical" },
+                        { character: "Sakshi", text: "Watch me. कार्तिक पूर्णिमा में, चन्द्र और विष्णु नक्षत्र का संयोग...", emotion: "demonstrating" },
+                        { character: "Krishna", text: "My sister, the genius.", emotion: "proud" },
+                        { character: "Sakshi", text: "You taught me to dream big.", emotion: "blushing" }
+                    ],
+                    puzzle: {
+                        type: "astronomy_puzzle",
+                        title: "Calculate Planetary Alignment",
+                        description: "Determine the correct planetary alignment on Kartik Purnima to reveal Yantra location"
+                    },
+                    action: () => this.startChapterScene(5, 5)
+                },
+                5: {
+                    title: "Surveillance Discovery",
+                    dialogues: [
+                        { character: "Krishna", text: "We're not just finding artifacts. We're being herded.", emotion: "serious" },
+                        { character: "Sakshi", text: "Viren wants us to find everything, then take it from us.", emotion: "worried" },
+                        { character: "News Anchor", text: "Mystery illness outbreak in rural Maharashtra. Death toll rising.", emotion: "news" },
+                        { character: "Viren", text: "Arora Biotech is working round the clock for cure. Price will be reasonable.", emotion: "tv" },
+                        { character: "Krishna", text: "He creates disease, then sells cure. Monster.", emotion: "disgusted" },
+                        { character: "Sakshi", text: "More reason to stop him. No matter what.", emotion: "determined" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(6, 1)
+                }
+            }
+        },
+
+        6: {
+            title: "The Serpent's Gate",
+            location: "Temple Outer Chambers",
+            scenes: {
+                1: {
+                    title: "Temple Approach - Dawn",
+                    dialogues: [
+                        { character: "Krishna", text: "अद्भुत (Incredible)! Our ancestors built this?", emotion: "awestruck" },
+                        { character: "Sakshi", text: "Every stone carved with devotion. Every measurement perfect.", emotion: "emotional" },
+                        { character: "Dr. Iyer", text: "Temple is closed to non-Hindus after 6 PM. Use my research permit.", emotion: "informing" },
+                        { character: "Temple Guard", text: "Purpose of visit?", emotion: "stern" },
+                        { character: "Dr. Iyer", text: "Architectural documentation for UNESCO.", emotion: "calm" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(6, 2)
+                },
+                2: {
+                    title: "Outer Chamber Puzzles",
+                    dialogues: [
+                        { character: "Sakshi", text: "'Only those pure of heart and intention may proceed'... Bhai, it's not just translation. It's spiritual test.", emotion: "translating" },
+                        { character: "Krishna", text: "सत्यम् शिवम् सुन्दरम् (Truth, Divinity, Beauty) - we need to wait for specific time.", emotion: "analyzing" },
+                        { character: "Sakshi", text: "Ancient solar engineering! They knew exact angles!", emotion: "impressed" }
+                    ],
+                    puzzle: {
+                        type: "solar_alignment",
+                        title: "Sunlight Alignment Puzzle",
+                        description: "Wait until sunlight forms Sanskrit letters to unlock mechanism"
+                    },
+                    action: () => this.startChapterScene(6, 3)
+                },
+                3: {
+                    title: "The Music Chamber",
+                    dialogues: [
+                        { character: "Sakshi", text: "Om Namo Narayanaya... the melody opens the passage.", emotion: "humming" },
+                        { character: "Krishna", text: "Our ancestors made security systems that are also art.", emotion: "awe" }
+                    ],
+                    puzzle: {
+                        type: "musical_sequence",
+                        title: "Vedic Chant Melody",
+                        description: "Recreate musical notes matching Vedic chants to open door"
+                    },
+                    action: () => this.startChapterScene(6, 4)
+                },
+                4: {
+                    title: "Captured!",
+                    dialogues: [
+                        { character: "Viren's Lieutenant", text: "Thank you for doing the hard work. We'll take it from here.", emotion: "smug" },
+                        { character: "Krishna", text: "Let Sakshi go. This is between me and Viren.", emotion: "pleading" },
+                        { character: "Lieutenant", text: "Both of you are valuable. Especially the little genius.", emotion: "threatening" },
+                        { character: "Sakshi", text: "Don't give them anything, bhai! Remember our promise!", emotion: "brave" },
+                        { character: "Krishna", text: "Sakshi! I'll find you!", emotion: "anguished" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(7, 1)
+                }
+            }
+        },
+        7: {
+            title: "The Flooded Passages",
+            location: "Temple Underground",
+            scenes: {
+                1: {
+                    title: "Alone and Desperate",
+                    dialogues: [
+                        { character: "Krishna", text: "Sakshi... I failed to protect you. But I won't fail to save you.", emotion: "internal_monologue" }
+                    ],
+                    puzzle: {
+                        type: "water_flow_timing",
+                        title: "Control Water Levels",
+                        description: "Time the water flow to access different tunnel levels"
+                    },
+                    action: () => this.startChapterScene(7, 2)
+                },
+                2: {
+                    title: "Supernatural Guidance",
+                    dialogues: [
+                        { character: "Krishna", text: "These lights... divine guidance? या मेरा दिमाग खराब हो गया है (Or am I losing my mind)?", emotion: "confused" },
+                        { character: "Serpent Guardian", text: "पुत्र, this path leads to destruction.", emotion: "mystical_voice" },
+                        { character: "Krishna", text: "Naag devata, I seek only to save my sister and protect sacred knowledge.", emotion: "respectful" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(7, 3)
+                },
+                3: {
+                    title: "Flashback - Sibling Bond",
+                    dialogues: [
+                        { character: "Young Sakshi", text: "Bhai, Sanskrit isn't just language. It's code of universe itself.", emotion: "teaching" },
+                        { character: "Young Krishna", text: "Too complicated for me.", emotion: "confused" },
+                        { character: "Young Sakshi", text: "I'll always be here to help you understand.", emotion: "supportive" },
+                        { character: "Krishna", text: "I understand now, choti. Language, coding, spirituality—all connected. Just like us.", emotion: "smiling" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(7, 4)
+                },
+                4: {
+                    title: "The Temple's Heart",
+                    dialogues: [
+                        { character: "Krishna", text: "Vishnu bhagwan, grant me strength. Not for myself, but for dharma.", emotion: "praying" },
+                        { character: "Krishna", text: "Divine intervention... or perfect engineering? Maybe both.", emotion: "awed" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(8, 1)
+                }
+            }
+        },
+
+        8: {
+            title: "The Vault's Secret",
+            location: "Vault B Approach",
+            scenes: {
+                1: {
+                    title: "Viren's Torture Chamber",
+                    dialogues: [
+                        { character: "Viren Arora", text: "Miss Patil, you're remarkably stubborn for someone so small.", emotion: "cruel" },
+                        { character: "Sakshi", text: "Size doesn't determine courage. My brother taught me that.", emotion: "fierce" },
+                        { character: "Viren", text: "Your brother is probably dead in those flooded tunnels.", emotion: "mocking" },
+                        { character: "Sakshi", text: "Krishna never gives up. Neither do I.", emotion: "confident" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(8, 2)
+                },
+                2: {
+                    title: "False Translations",
+                    dialogues: [
+                        { character: "Viren's Expert", text: "The algorithm should unlock Vault B.", emotion: "expectant" },
+                        { character: "Sakshi", text: "Sanskrit says 'चन्द्र प्रकाश में खुलेगा' (Opens in moonlight). You need to wait for night.", emotion: "lying" },
+                        { character: "Viren", text: "You're stalling.", emotion: "suspicious" },
+                        { character: "Sakshi", text: "Ancient knowledge can't be rushed. Force it, and it destroys itself.", emotion: "warning" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(8, 3)
+                },
+                3: {
+                    title: "Krishna's Discovery",
+                    dialogues: [
+                        { character: "Krishna", text: "'भाई, वॉल्ट बी में जाल है' (Brother, Vault B is trapped). She's warning me.", emotion: "reading" },
+                        { character: "Krishna", text: "Even in captivity, she's protecting the mission. My brave little sister.", emotion: "emotional" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(8, 4)
+                },
+                4: {
+                    title: "The True Conspiracy Revealed",
+                    dialogues: [
+                        { character: "Krishna", text: "Corona virus... engineered. Millions died for his profit. Monster!", emotion: "horrified" },
+                        { character: "Krishna", text: "He's been erasing humanity's healing wisdom to maintain monopoly. Not anymore.", emotion: "determined" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(9, 1)
+                }
+            }
+        },
+
+        9: {
+            title: "The Watch Signal",
+            location: "Final Preparations",
+            scenes: {
+                1: {
+                    title: "The Broken Watch",
+                    dialogues: [
+                        { character: "Krishna", text: "Watch is dead... but if signal went through...", emotion: "noticing" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(9, 2)
+                },
+                2: {
+                    title: "Laxman's Journey",
+                    dialogues: [
+                        { character: "Laxman", text: "Run Sole Mate for few days. I have to save my brother.", emotion: "determined" },
+                        { character: "Employee", text: "Sir, Kerala is far. Should we inform police?", emotion: "concerned" },
+                        { character: "Laxman", text: "Police won't understand. This needs street-smart solution.", emotion: "decisive" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(9, 3)
+                },
+                3: {
+                    title: "Unexpected Arrival",
+                    dialogues: [
+                        { character: "Laxman", text: "So this is your idea of vacation? Five-star temple with complimentary drowning?", emotion: "casual" },
+                        { character: "Krishna", text: "Laxman! How did you—", emotion: "overjoyed" },
+                        { character: "Laxman", text: "Emergency watch, genius. Also brought better shoes—yours are terrible for climbing.", emotion: "teasing" },
+                        { character: "Krishna", text: "Sakshi's captured. I need help.", emotion: "urgent" },
+                        { character: "Laxman", text: "Then let's go get our girl back.", emotion: "serious" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(9, 4)
+                },
+                4: {
+                    title: "Planning the Rescue",
+                    dialogues: [
+                        { character: "Krishna", text: "Viren has high-tech security, trained mercenaries.", emotion: "worried" },
+                        { character: "Laxman", text: "And we have street smarts, divine protection, and righteous anger. Sometimes that's enough.", emotion: "confident" },
+                        { character: "Krishna", text: "This isn't game, yaar. People could die.", emotion: "serious" },
+                        { character: "Laxman", text: "People are already dying from his engineered diseases. Time to stop talking, start acting.", emotion: "motivational" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(10, 1)
+                }
+            }
+        },
+
+        10: {
+            title: "The Sutra's Guardian",
+            location: "Vault B Interior",
+            scenes: {
+                1: {
+                    title: "Infiltration",
+                    dialogues: [
+                        { character: "Laxman", text: "For a temple, this place has way too many computers.", emotion: "whispering" },
+                        { character: "Krishna", text: "He's turned sacred space into laboratory. Sacrilege.", emotion: "disgusted" },
+                        { character: "Viren", text: "If the girl won't cooperate, kill her. We'll extract the knowledge by force.", emotion: "threatening" },
+                        { character: "Krishna", text: "Over my dead body.", emotion: "enraged" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(10, 2)
+                },
+                2: {
+                    title: "Vault B Revealed",
+                    dialogues: [
+                        { character: "Krishna", text: "This isn't vault. It's ancient medical research center!", emotion: "amazed" },
+                        { character: "Laxman", text: "Our ancestors were doing experiments here?", emotion: "surprised" },
+                        { character: "Krishna", text: "They weren't just spiritual—they were scientists! This knowledge could cure everything!", emotion: "excited" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(10, 3)
+                },
+                3: {
+                    title: "The Guardian Test",
+                    dialogues: [
+                        { character: "Sakshi", text: "Bhai! I knew you'd come!", emotion: "reunited" },
+                        { character: "Krishna", text: "Never doubt your brother. We finish this together.", emotion: "comforting" },
+                        { character: "Laxman", text: "Family reunion later. How do we solve this thing?", emotion: "practical" },
+                        { character: "Sakshi", text: "The Sutra isn't just medical text—it's comprehensive healing system. Physical, mental, spiritual.", emotion: "explaining" }
+                    ],
+                    puzzle: {
+                        type: "collaborative_puzzle",
+                        title: "Guardian Test",
+                        description: "Coordinate quantum algorithms, astronomical calculations, and engineering"
+                    },
+                    action: () => this.startChapterScene(10, 4)
+                },
+                4: {
+                    title: "Viren's Last Stand",
+                    dialogues: [
+                        { character: "Viren", text: "Touching family reunion. Now hand over the Sutra, or everyone dies.", emotion: "threatening" },
+                        { character: "Krishna", text: "Knowledge belongs to humanity!", emotion: "defiant" },
+                        { character: "Viren", text: "Humanity can't handle this power. I can.", emotion: "arrogant" },
+                        { character: "Sakshi", text: "You're not God!", emotion: "defiant" },
+                        { character: "Viren", text: "In the medical world, I am.", emotion: "domineering" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(11, 1)
+                }
+            }
+        },
+
+        11: {
+            title: "The Cliff's Edge",
+            location: "Final Confrontation",
+            scenes: {
+                1: {
+                    title: "Tower Battle",
+                    dialogues: [
+                        { character: "Krishna", text: "This temple has stood for centuries! Your greed ends here!", emotion: "fighting" },
+                        { character: "Viren", text: "Ancient wisdom is wasted on the masses! Only the elite deserve immortality!", emotion: "sneering" },
+                        { character: "Sakshi", text: "Bhai, remember—our ancestors built escape routes!", emotion: "tactical" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(11, 2)
+                },
+                2: {
+                    title: "Laxman's Heroic Moment",
+                    dialogues: [
+                        { character: "Laxman", text: "Sorry, but this doesn't belong to you!", emotion: "defiant" },
+                        { character: "Viren", text: "You street-smart fool! You don't understand its value!", emotion: "furious" },
+                        { character: "Laxman", text: "I understand its value better than you. It's priceless because it's meant to be free.", emotion: "confident" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(11, 3)
+                },
+                3: {
+                    title: "Sakshi's Strength",
+                    dialogues: [
+                        { character: "Viren", text: "One more step and the girl dies!", emotion: "threatening" },
+                        { character: "Sakshi", text: "Bhai, remember what you taught me about leverage?", emotion: "calm" },
+                        { character: "Sakshi", text: "Small doesn't mean weak. It means underestimated.", emotion: "defiant" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(11, 4)
+                },
+                4: {
+                    title: "Divine Justice",
+                    dialogues: [
+                        { character: "Viren", text: "If I can't have it, no one can!", emotion: "falling" },
+                        { character: "Krishna", text: "Greed has its own gravity. It pulls you down.", emotion: "resolute" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(12, 1)
+                }
+            }
+        },
+
+        12: {
+            title: "The Return",
+            location: "Resolution and Future",
+            scenes: {
+                1: {
+                    title: "Aftermath",
+                    dialogues: [
+                        { character: "Krishna", text: "Parth ji's sacrifice wasn't in vain. The knowledge is safe.", emotion: "peaceful" },
+                        { character: "Sakshi", text: "And it'll be shared freely, like he wanted.", emotion: "content" },
+                        { character: "Laxman", text: "So, back to normal life now? Because I have shoes to sell.", emotion: "lighthearted" },
+                        { character: "All", text: "(*All laugh*)", emotion: "happy" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(12, 2)
+                },
+                2: {
+                    title: "The Vedic Sutra",
+                    dialogues: [
+                        { character: "Dr. Iyer", text: "This knowledge... it's not just medicine. It's complete healing—body, mind, soul.", emotion: "warm" },
+                        { character: "Sakshi", text: "We'll work with ethical scientists. Open source everything.", emotion: "dedicated" },
+                        { character: "Krishna", text: "No patents, no monopolies. Just healing.", emotion: "determined" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(12, 3)
+                },
+                3: {
+                    title: "Mumbai Return",
+                    dialogues: [
+                        { character: "Sakshi", text: "Bhai, I'm not your little sister anymore. I'm your equal partner.", emotion: "proud" },
+                        { character: "Krishna", text: "You always were. I just needed to see it.", emotion: "smiling" },
+                        { character: "Sakshi", text: "And you're not just my brilliant brother. You're my hero.", emotion: "emotional" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(12, 4)
+                },
+                4: {
+                    title: "New Beginning",
+                    dialogues: [
+                        { character: "Krishna", text: "Technology should serve humanity, not control it. Our new mission: making healing accessible to everyone.", emotion: "press" },
+                        { character: "Sakshi", text: "Ancient wisdom, modern application, human compassion.", emotion: "confident" },
+                        { character: "Reporter", text: "What's next for you two?", emotion: "curious" },
+                        { characters: ["Krishna", "Sakshi"], text: "Whatever the world needs.", emotion: "together" }
+                    ],
+                    puzzle: null,
+                    action: () => this.startChapterScene(12, 5)
+                },
+                5: {
+                    title: "Spiritual Conclusion",
+                    dialogues: [
+                        { character: "Laxman", text: "Still think that shadow in Kerala was just wind?", emotion: "teasing" },
+                        { character: "Krishna", text: "Hanuman ji protected us throughout. Divine intervention isn't superstition—it's reality for those with faith.", emotion: "praying" },
+                        { character: "Sakshi", text: "Bhai taught me coding. God taught us purpose.", emotion: "reflective" },
+                        { character: "Krishna", text: "True treasure isn't gold or technology. It's knowledge shared with love, wisdom applied with compassion, and bonds that transcend everything else.", emotion: "voice_over" }
+                    ],
+                    puzzle: null,
+                    action: () => this.endGame()
+                }
+            }
+        }
             // Additional chapters would continue here...
         };
     }
