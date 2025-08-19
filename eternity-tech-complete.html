@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternity Tech: The Padmanabha Enigma</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #6e44ff;
+            --color-secondary: #ff44a7;
+            --color-accent: #44ffd1;
+            --color-dark: #0f1020;
+            --color-darker: #080a14;
+            --color-light: #f8f9ff;
+            --color-surface: #1a1c30;
+            --color-surface-light: #2a2d4a;
+            --color-border: rgba(255, 255, 255, 0.1);
+            --color-text: #ffffff;
+            --color-text-secondary: #ccd0e0;
+            --color-success: #44ff77;
+            --color-warning: #ffcc44;
+            --color-danger: #ff4466;
+            --color-gold: #ffd700;
+            --color-saffron: #ff9933;
+            --color-temple: #8b4513;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Devanagari UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--color-darker) 0%, var(--color-dark) 100%);
+            color: var(--color-text);
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-darker) 0%, var(--color-dark) 50%, var(--color-primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(45deg, var(--color-accent), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 32px;
+            color: var(--color-text-secondary);
+            font-weight: 300;
+        }
+
+        .sanskrit-text {
+            font-size: 1.2rem;
+            color: var(--color-gold);
+            margin: 16px 0;
+            font-style: italic;
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 6px;
+            background: var(--color-surface);
+            border-radius: 8px;
+            margin: 24px auto;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            transition: width 0.3s ease;
+        }
+
+        /* Backstory Screen */
+        .backstory-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-darker) 0%, var(--color-dark) 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1900;
+            padding: 40px;
+        }
+
+        .backstory-screen.active {
+            display: flex;
+        }
+
+        .backstory-content {
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .backstory-title {
+            font-size: 2rem;
+            color: var(--color-accent);
+            margin-bottom: 30px;
+        }
+
+        .backstory-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .backstory-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .backstory-skip {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .backstory-skip:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* Main Menu */
+        .main-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-darker) 0%, var(--color-dark) 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1800;
+        }
+
+        .main-menu.active {
+            display: flex;
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-width: 250px;
+        }
+
+        .menu-button {
+            padding: 16px 32px;
+            background: var(--color-surface);
+            color: var(--color-text);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .menu-button:hover {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Game Interface */
+        .game-interface {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            display: none;
+        }
+
+        .game-interface.active {
+            display: block;
+        }
+
+        #game-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* HUD Elements */
+        .game-hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 200;
+        }
+
+        .game-hud > * {
+            pointer-events: auto;
+        }
+
+        .top-hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .chapter-info-hud {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 16px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .chapter-info-hud h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--color-accent);
+        }
+
+        .chapter-info-hud p {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* Dialogue System */
+        .dialogue-box {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--color-primary);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(15px);
+            display: none;
+        }
+
+        .dialogue-box.active {
+            display: block;
+        }
+
+        .character-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            margin-bottom: 12px;
+        }
+
+        .dialogue-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            min-height: 60px;
+        }
+
+        .dialogue-continue {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* Puzzle Interface */
+        .puzzle-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            max-width: 90vw;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--color-accent);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            display: none;
+        }
+
+        .puzzle-container.active {
+            display: block;
+        }
+
+        .puzzle-title {
+            font-size: 1.4rem;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .puzzle-description {
+            margin-bottom: 25px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .puzzle-grid {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .puzzle-item {
+            padding: 10px;
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .puzzle-item:hover {
+            border-color: var(--color-primary);
+            background: var(--color-surface-light);
+        }
+
+        .puzzle-item.selected {
+            border-color: var(--color-accent);
+            background: var(--color-primary);
+        }
+
+        .puzzle-item.correct {
+            border-color: var(--color-success);
+            background: rgba(68, 255, 119, 0.2);
+        }
+
+        .puzzle-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .puzzle-button {
+            padding: 10px 20px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .puzzle-button:hover {
+            background: var(--color-secondary);
+        }
+
+        .puzzle-button:disabled {
+            background: var(--color-surface);
+            color: var(--color-text-secondary);
+            cursor: not-allowed;
+        }
+
+        /* Inventory System */
+        .inventory-panel {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 300px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--color-border);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            display: none;
+        }
+
+        .inventory-panel.active {
+            display: block;
+        }
+
+        .inventory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 12px;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .inventory-slot {
+            aspect-ratio: 1;
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .inventory-slot:hover {
+            border-color: var(--color-primary);
+        }
+
+        .inventory-slot.occupied {
+            background: var(--color-surface-light);
+            border-color: var(--color-accent);
+        }
+
+        /* Chapter Progress */
+        .chapter-progress {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: var(--color-surface);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Controls Hint */
+        .controls-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            font-size: 0.8rem;
+        }
+
+        .controls-hint p {
+            margin-bottom: 8px;
+        }
+
+        /* Sanskrit Text Styling */
+        .sanskrit {
+            font-family: 'Devanagari UI', 'Noto Sans Devanagari', serif;
+            color: var(--color-gold);
+            font-style: italic;
+        }
+
+        /* Cultural Elements */
+        .cultural-element {
+            border-left: 3px solid var(--color-saffron);
+            padding-left: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        /* Emotion-based dialogue styling */
+        .emotion-excited {
+            border-color: var(--color-warning);
+        }
+
+        .emotion-worried {
+            border-color: var(--color-danger);
+        }
+
+        .emotion-confident {
+            border-color: var(--color-success);
+        }
+
+        .emotion-determined {
+            border-color: var(--color-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dialogue-box {
+                width: 95%;
+                padding: 16px;
+            }
+
+            .puzzle-container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .inventory-panel {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                right: auto;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <h1 class="game-title">Eternity Tech</h1>
+            <h2 class="game-subtitle">The Padmanabha Enigma</h2>
+            <div class="sanskrit-text">सत्यम् शिवम् सुन्दरम्</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-text">Loading Ancient Wisdom...</p>
+        </div>
+    </div>
+
+    <!-- Backstory Screen -->
+    <div id="backstory-screen" class="backstory-screen">
+        <button class="backstory-skip" onclick="skipBackstory()">Skip Backstory</button>
+        <div class="backstory-content">
+            <h2 class="backstory-title">The Beginning of the Journey</h2>
+            <div id="backstory-text-container">
+                <!-- Backstory text will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="main-menu">
+        <div class="menu-header">
+            <h1 class="game-title">Eternity Tech</h1>
+            <div class="sanskrit-text">सत्यम् शिवम् सुन्दरम्</div>
+            <p>The Padmanabha Enigma</p>
+        </div>
+        <div class="menu-buttons">
+            <button class="menu-button" onclick="startNewGame()">
+                <i class="fas fa-play"></i> Start New Journey
+            </button>
+            <button class="menu-button" onclick="continueGame()">
+                <i class="fas fa-save"></i> Continue Game
+            </button>
+            <button class="menu-button" onclick="showChapterSelect()">
+                <i class="fas fa-list"></i> Chapter Selection
+            </button>
+            <button class="menu-button" onclick="showSettings()">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+            <button class="menu-button" onclick="showCredits()">
+                <i class="fas fa-info-circle"></i> About
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Interface -->
+    <div id="game-interface" class="game-interface">
+        <div id="game-container"></div>
+        
+        <!-- Game HUD -->
+        <div class="game-hud">
+            <!-- Top HUD -->
+            <div class="top-hud">
+                <div class="chapter-info-hud">
+                    <h3 id="chapter-title">Chapter 1: Code of the Ancients</h3>
+                    <p id="chapter-location">Mumbai, Eternity Tech HQ</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-heart"></i>
+                        <span id="health">100</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter Progress -->
+            <div class="chapter-progress">
+                <div>Chapter <span id="current-chapter">1</span> of 12</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div id="progress-text">Starting the adventure...</div>
+            </div>
+
+            <!-- Controls Hint -->
+            <div class="controls-hint">
+                <p><strong>Movement:</strong> WASD keys</p>
+                <p><strong>Interact:</strong> E key / Click</p>
+                <p><strong>Continue:</strong> SPACE key</p>
+                <p><strong>Menu:</strong> ESC key</p>
+            </div>
+        </div>
+
+        <!-- Dialogue Box -->
+        <div id="dialogue-box" class="dialogue-box">
+            <div class="character-name" id="character-name">Krishna</div>
+            <div class="dialogue-text" id="dialogue-text">Welcome to Eternity Tech!</div>
+            <div class="dialogue-continue">
+                <p>Press SPACE or click to continue</p>
+            </div>
+        </div>
+
+        <!-- Puzzle Container -->
+        <div id="puzzle-container" class="puzzle-container">
+            <div class="puzzle-title" id="puzzle-title">Ancient Sanskrit Cipher</div>
+            <div class="puzzle-description" id="puzzle-description">
+                Arrange the Sanskrit symbols in the correct order to decode the message.
+            </div>
+            <div class="puzzle-grid" id="puzzle-grid">
+                <!-- Puzzle elements will be generated dynamically -->
+            </div>
+            <div class="puzzle-actions">
+                <button class="puzzle-button" onclick="checkPuzzle()">Check Solution</button>
+                <button class="puzzle-button" onclick="resetPuzzle()">Reset</button>
+                <button class="puzzle-button" onclick="closePuzzle()">Close</button>
+            </div>
+        </div>
+
+        <!-- Inventory Panel -->
+        <div id="inventory-panel" class="inventory-panel">
+            <div class="inventory-header">
+                <h4><i class="fas fa-backpack"></i> Inventory</h4>
+                <button onclick="closeInventory()">&times;</button>
+            </div>
+            <div class="inventory-grid" id="inventory-grid">
+                <!-- Inventory slots will be generated -->
+            </div>
+        </div>
+    </div>
+
+<script>
+// Eternity Tech: The Padmanabha Enigma - Complete Game Engine
+class EternityTechGame {
+    constructor() {
+        this.scene = null;
+        this.camera = null;
+        this.renderer = null;
+        this.gameState = 'loading';
+        this.currentChapter = 1;
+        this.currentScene = 1;
+        this.currentDialogue = 0;
+        this.playerData = {
+            progress: JSON.parse(localStorage.getItem('eternitytech_progress')) || {},
+            inventory: JSON.parse(localStorage.getItem('eternitytech_inventory')) || [],
+            settings: JSON.parse(localStorage.getItem('eternitytech_settings')) || this.getDefaultSettings(),
+            stats: { health: 100, score: 0 }
+        };
+        
+        // Game systems
+        this.inventorySystem = new InventorySystem();
+        this.puzzleSystem = new PuzzleSystem();
+        this.chapterData = this.initChapterData();
+        this.currentDialogues = [];
+        
+        this.init();
+    }
+
+    getDefaultSettings() {
+        return {
+            masterVolume: 70,
+            musicVolume: 50,
+            sfxVolume: 70,
+            graphicsQuality: 'medium'
+        };
+    }
+
+    init() {
+        this.showLoadingScreen();
+        this.setupEventListeners();
+        
+        // Simulate loading
+        setTimeout(() => {
+            this.showBackstory();
+        }, 3000);
+    }
+
+    showLoadingScreen() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const progressBar = document.querySelector('.loading-progress');
+        let progress = 0;
+        
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(loadingInterval);
+            }
+            progressBar.style.width = progress + '%';
+        }, 200);
+    }
+
+    showBackstory() {
+        document.getElementById('loading-screen').classList.add('hidden');
+        document.getElementById('backstory-screen').classList.add('active');
+        
+        const backstoryTexts = [
+            "In the heart of Mumbai, two siblings are about to change the world...",
+            "Krishna and Sakshi Patil have spent years developing revolutionary technology.",
+            "Their innovation: combining ancient Sanskrit wisdom with quantum computing.",
+            "What started as academic research has become something extraordinary.",
+            "Sanskrit's perfect grammar makes it ideal for quantum algorithms.",
+            "Their mentor, Parth Deshmukh, guided them from the beginning.",
+            "Today is the day they present their creation to the world.",
+            "But unknown forces are watching... and waiting.",
+            "Ancient knowledge holds power that some would kill for.",
+            "The journey begins with a presentation that will change everything.",
+            "Welcome to the world of Eternity Tech.",
+            "सत्यम् शिवम् सुन्दरम् - Truth, Auspiciousness, Beauty."
+        ];
+        
+        let textIndex = 0;
+        const container = document.getElementById('backstory-text-container');
+        
+        const showNextText = () => {
+            if (textIndex < backstoryTexts.length) {
+                const textElement = document.createElement('div');
+                textElement.className = 'backstory-text';
+                textElement.textContent = backstoryTexts[textIndex];
+                container.appendChild(textElement);
+                
+                // Animate in
+                setTimeout(() => {
+                    textElement.classList.add('visible');
+                }, 100);
+                
+                textIndex++;
+                setTimeout(showNextText, 2500);
+            } else {
+                // Backstory complete, show menu after delay
+                setTimeout(() => {
+                    this.showMainMenu();
+                }, 3000);
+            }
+        };
+        
+        showNextText();
+    }
+
+    showMainMenu() {
+        document.getElementById('backstory-screen').classList.remove('active');
+        document.getElementById('main-menu').classList.add('active');
+        this.gameState = 'menu';
+    }
+
+    setupEventListeners() {
+        document.addEventListener('keydown', (e) => {
+            this.handleKeyPress(e);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#dialogue-box') && !e.target.closest('.dialogue-continue')) {
+                this.nextDialogue();
+            }
+        });
+
+        // Prevent context menu for immersion
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+    }
+
+    handleKeyPress(e) {
+        switch (e.code) {
+            case 'Space':
+                e.preventDefault();
+                if (this.gameState === 'dialogue') {
+                    this.nextDialogue();
+                }
+                break;
+            case 'Escape':
+                if (this.gameState === 'playing') {
+                    this.showPauseMenu();
+                }
+                break;
+            case 'KeyE':
+                if (this.gameState === 'playing') {
+                    this.interact();
+                }
+                break;
+            case 'KeyI':
+                if (this.gameState === 'playing') {
+                    this.toggleInventory();
+                }
+                break;
+        }
+    }
+
+    startNewGame() {
+        this.playerData.progress = {};
+        this.playerData.inventory = [];
+        this.currentChapter = 1;
+        this.currentScene = 1;
+        this.savePlayerData();
+        this.startChapter(1);
+    }
+
+    continueGame() {
+        const lastChapter = Math.max(1, ...Object.keys(this.playerData.progress).map(Number)) || 1;
+        this.startChapter(lastChapter);
+    }
+
+    startChapter(chapterNumber) {
+        this.currentChapter = chapterNumber;
+        this.currentScene = 1;
+        
+        document.getElementById('main-menu').classList.remove('active');
+        document.getElementById('game-interface').classList.add('active');
+        
+        const chapterData = this.chapterData[chapterNumber];
+        document.getElementById('chapter-title').textContent = `Chapter ${chapterNumber}: ${chapterData.title}`;
+        document.getElementById('chapter-location').textContent = chapterData.location;
+        document.getElementById('current-chapter').textContent = chapterNumber;
+        
+        this.updateProgress();
+        this.initThreeJS();
+        this.startChapterScene(chapterNumber, 1);
+    }
+
+    initChapterData() {
+        return {
+            1: {
+                title: "Code of the Ancients",
+                location: "Mumbai, Eternity Tech HQ",
+                scenes: {
+                    1: {
+                        title: "Eternity Tech Lobby - Morning",
+                        dialogues: [
+                            { character: "Employee 1", text: "Sir, Reuters wants an interview! They're calling it the 'Sanskrit Revolution'!", emotion: "excited" },
+                            { character: "Krishna", text: "Revolution? Arrey yaar, we're just bringing our grandparents' wisdom to quantum processors.", emotion: "grinning" },
+                            { character: "Sakshi", text: "Bhai, your ego is also getting quantum-sized.", emotion: "rolling_eyes" },
+                            { character: "Parth Deshmukh", text: "Beta Krishna, beta Sakshi, ready for the biggest day of your lives?", emotion: "warm" },
+                            { character: "Krishna", text: "Parth ji, you taught us everything. Today, we make our ancestors proud.", emotion: "respectful" },
+                            { character: "Sakshi", text: "Aashirwad dijiye, Parth uncle. Without you, we're just two kids with big dreams.", emotion: "touching_feet" },
+                            { character: "Parth", text: "Vijayee bhava, both of you. आज तुम्हारा दिन है।", emotion: "blessing" }
+                        ],
+                        puzzle: null,
+                        action: () => this.startChapterScene(1, 2)
+                    },
+                    2: {
+                        title: "Presentation Hall - Tech Demo",
+                        dialogues: [
+                            { character: "Krishna", text: "Namaskar! Today, we prove that our शास्त्र (shastras) aren't just philosophy—they're the future of technology!", emotion: "confident" },
+                            { character: "Investor Jenkins", text: "Mr. Patil, Sanskrit is beautiful, but can ancient language really optimize quantum computing?", emotion: "skeptical" },
+                            { character: "Sakshi", text: "Sir, Sanskrit has zero ambiguity—no grammar confusion, perfect for algorithms. If Panini could create 4,000 rules without a computer, imagine what we can do WITH one.", emotion: "confident" },
+                            { character: "Krishna", text: "Ladies and gentlemen, witness Project Vedic OS—solving protein folding in real time!", emotion: "theatrical" },
+                            { character: "Dr. Sharma", text: "Impossible! This is 400% faster than our best supercomputers!", emotion: "amazed" },
+                            { character: "Sakshi", text: "Show-off. But good show-off.", emotion: "whispering" },
+                            { character: "Krishna", text: "$10 million valuation, choti. We did it!", emotion: "winking" }
+                        ],
+                        puzzle: {
+                            type: "sanskrit_sequence",
+                            title: "Demonstrate Vedic OS",
+                            description: "Arrange the Sanskrit code sequence to optimize the quantum algorithm",
+                            items: ["ॐ", "गणेशाय", "नमः", "सरस्वत्यै", "विद्या", "दान"]
+                        },
+                        action: () => this.startChapterScene(1, 3)
+                    },
+                    3: {
+                        title: "Rooftop Celebration - Sunset",
+                        dialogues: [
+                            { character: "Sakshi", text: "Bhai, remember when you taught me first Sanskrit shloka? 'सरस्वती नमस्तुभ्यं'—pray to Goddess of Knowledge.", emotion: "nostalgic" },
+                            { character: "Krishna", text: "You were seven, correcting my pronunciation. Typical Sakshi.", emotion: "smiling" },
+                            { character: "Sakshi", text: "Are we doing the right thing? All this power... what if wrong people get it?", emotion: "worried" },
+                            { character: "Krishna", text: "Then we make sure they don't. विद्या दान ही सच्चा दान है (Knowledge sharing is true charity). That's our dharma.", emotion: "serious" }
+                        ],
+                        puzzle: null,
+                        action: () => this.startChapterScene(1, 4)
+                    },
+                    4: {
+                        title: "Late Night Crisis - Office",
+                        dialogues: [
+                            { character: "Parth", text: "Krishna! Sakshi! Someone's been stealing our research! This drive... it has a map, Sanskrit coordinates—", emotion: "panicked" },
+                            { character: "Krishna", text: "Slow down, Parth ji. Who would want our code?", emotion: "concerned" },
+                            { character: "Parth", text: "The temple... Padmanabhaswamy... Opens every 400 years... Vedic Sutra—", emotion: "trembling" },
+                            { character: "Gunman Leader", text: "Hand over the drive, old man!", emotion: "threatening" },
+                            { character: "Parth", text: "Never! This knowledge belongs to humanity!", emotion: "defiant" },
+                            { character: "Parth", text: "Temple... Vault B... Viren... don't let evil win...", emotion: "dying" },
+                            { character: "Sakshi", text: "Parth uncle! No!", emotion: "crying" },
+                            { character: "Krishna", text: "We'll finish what you started. Promise.", emotion: "grief_stricken" }
+                        ],
+                        puzzle: null,
+                        action: () => this.startChapterScene(1, 5)
+                    },
+                    5: {
+                        title: "Escape Through Mumbai",
+                        dialogues: [
+                            { character: "Krishna", text: "Can you hack their comms?", emotion: "urgent" },
+                            { character: "Sakshi", text: "भगवान का नाम लेकर (Taking God's name)... Done! Their radios are fried!", emotion: "focused" },
+                            { character: "Krishna", text: "Vighnaharta, show us the path.", emotion: "praying" },
+                            { character: "Goons", text: "Hanuman! भूत! Run!", emotion: "terrified" },
+                            { character: "Sakshi", text: "Bhai... did you see...?", emotion: "awestruck" },
+                            { character: "Krishna", text: "Hanuman ji saved us. जय हनुमान। We're protected.", emotion: "reverent" }
+                        ],
+                        puzzle: {
+                            type: "escape_route",
+                            title: "Escape Through Mumbai",
+                            description: "Find the safe path through the temple to avoid the gunmen",
+                            items: ["Left", "Right", "Straight", "Temple", "Back Door", "Prayer Hall"]
+                        },
+                        action: () => this.completeChapter(1)
+                    }
+                }
+            },
+            2: {
+                title: "The Sanskrit Cipher",
+                location: "Mumbai Streets and Labs",
+                scenes: {
+                    1: {
+                        title: "Parth's Funeral - Next Day",
+                        dialogues: [
+                            { character: "Sakshi", text: "He was like a father to us.", emotion: "sobbing" },
+                            { character: "Krishna", text: "His sacrifice won't be wasted. The cipher he saved... it's our responsibility now.", emotion: "voice_breaking" },
+                            { character: "Pandit ji", text: "बेटा, जो गया वो वापस नहीं आएगा। But his good deeds will guide you.", emotion: "wise" }
+                        ],
+                        puzzle: null,
+                        action: () => this.startChapterScene(2, 2)
+                    },
+                    2: {
+                        title: "Decoding Session - Krishna's Apartment",
+                        dialogues: [
+                            { character: "Sakshi", text: "This cipher... it's not just code. It's Vedic astronomy mixed with quantum encryption.", emotion: "frustrated" },
+                            { character: "Krishna", text: "Tell me about our childhood again. When did you first realize you were smarter than me?", emotion: "nostalgic" },
+                            { character: "Sakshi", text: "When I was five, you couldn't solve 2+2. I did it in Sanskrit: द्वे + द्वे = चत्वारि।", emotion: "smiling_through_tears" },
+                            { character: "Krishna", text: "And now you're solving mysteries our ancestors left behind.", emotion: "proud" },
+                            { character: "Sakshi", text: "Bhai, look at this! Coordinates... Kerala... Padmanabhaswamy Temple!", emotion: "excited" },
+                            { character: "Krishna", text: "Vault B opens in 28 days. During Kartik Purnima, when moon aligns with Vishnu constellation.", emotion: "amazed" }
+                        ],
+                        puzzle: {
+                            type: "cipher_decode",
+                            title: "Decrypt Parth's Cipher",
+                            description: "Use Sanskrit astronomy knowledge to decode the hidden coordinates",
+                            items: ["चन्द्र", "सूर्य", "मंगल", "बुध", "गुरु", "शुक्र", "शनि", "राहु", "केतु"]
+                        },
+                        action: () => this.startChapterScene(2, 3)
+                    },
+                    3: {
+                        title: "Childhood Flashback - Pune",
+                        dialogues: [
+                            { character: "Younger Sakshi", text: "Bhai, why are you learning programming in English? Why not Sanskrit?", emotion: "curious" },
+                            { character: "Younger Krishna", text: "Pagal hai kya? Computers don't understand Sanskrit!", emotion: "dismissive" },
+                            { character: "Younger Sakshi", text: "Then we'll teach them. Sanskrit is perfect—no ambiguity, pure logic.", emotion: "determined" },
+                            { character: "Their Father", text: "My children will change the world someday.", emotion: "proud" }
+                        ],
+                        puzzle: null,
+                        action: () => this.startChapterScene(2, 4)
+                    },
+                    4: {
+                        title: "The Revelation",
+                        dialogues: [
+                            { character: "Sakshi", text: "Bhai! The cipher isn't just coordinates—it's a medical formula! Molecular healing patterns!", emotion: "excited" },
+                            { character: "Krishna", text: "'Sarva roga nivaran sutra'—cure for all diseases. This is what Viren wants.", emotion: "reading" },
+                            { character: "Sakshi", text: "If this falls into wrong hands...", emotion: "worried" },
+                            { character: "Krishna", text: "It won't. We go to Kerala. We find the truth.", emotion: "determined" },
+                            { character: "Viren Arora", text: "Mr. Patil, you have something that belongs to me.", emotion: "menacing" },
+                            { character: "Krishna", text: "Knowledge belongs to everyone, not to profiteers.", emotion: "defiant" },
+                            { character: "Viren", text: "How noble. How naive. Check your news.", emotion: "cold" },
+                            { character: "Sakshi", text: "He's framing us!", emotion: "shocked" },
+                            { character: "Viren", text: "24 hours to surrender the cipher. Or your company burns.", emotion: "threatening" }
+                        ],
+                        puzzle: {
+                            type: "medical_formula",
+                            title: "Decode Medical Formula",
+                            description: "Arrange the Sanskrit medical terms to reveal the healing formula",
+                            items: ["सर्व", "रोग", "निवारण", "सूत्र", "आयुर्वेद", "चिकित्सा"]
+                        },
+                        action: () => this.completeChapter(2)
+                    }
+                }
+            }
+            // Additional chapters would continue here...
+        };
+    }
+
+    startChapterScene(chapterNumber, sceneNumber) {
+        const chapterData = this.chapterData[chapterNumber];
+        const sceneData = chapterData.scenes[sceneNumber];
+        
+        if (!sceneData) {
+            this.completeChapter(chapterNumber);
+            return;
+        }
+        
+        this.currentScene = sceneNumber;
+        this.currentDialogues = sceneData.dialogues || [];
+        this.currentDialogue = 0;
+        this.gameState = 'dialogue';
+        
+        document.getElementById('progress-text').textContent = sceneData.title;
+        
+        if (this.currentDialogues.length > 0) {
+            this.showDialogue(this.currentDialogues[0]);
+        } else if (sceneData.puzzle) {
+            this.showPuzzle(sceneData.puzzle);
+        } else {
+            sceneData.action();
+        }
+    }
+
+    showDialogue(dialogue) {
+        const dialogueBox = document.getElementById('dialogue-box');
+        const characterName = document.getElementById('character-name');
+        const dialogueText = document.getElementById('dialogue-text');
+        
+        characterName.textContent = dialogue.character;
+        dialogueText.textContent = dialogue.text;
+        
+        // Apply emotion styling
+        dialogueBox.className = `dialogue-box active emotion-${dialogue.emotion || 'neutral'}`;
+        
+        this.gameState = 'dialogue';
+    }
+
+    nextDialogue() {
+        if (this.currentDialogue < this.currentDialogues.length - 1) {
+            this.currentDialogue++;
+            this.showDialogue(this.currentDialogues[this.currentDialogue]);
+        } else {
+            // Dialogue finished
+            document.getElementById('dialogue-box').classList.remove('active');
+            
+            const chapterData = this.chapterData[this.currentChapter];
+            const sceneData = chapterData.scenes[this.currentScene];
+            
+            if (sceneData.puzzle) {
+                this.showPuzzle(sceneData.puzzle);
+            } else {
+                sceneData.action();
+            }
+        }
+    }
+
+    showPuzzle(puzzleData) {
+        const puzzleContainer = document.getElementById('puzzle-container');
+        const puzzleTitle = document.getElementById('puzzle-title');
+        const puzzleDescription = document.getElementById('puzzle-description');
+        const puzzleGrid = document.getElementById('puzzle-grid');
+        
+        puzzleTitle.textContent = puzzleData.title;
+        puzzleDescription.textContent = puzzleData.description;
+        
+        // Generate puzzle based on type
+        this.puzzleSystem.generatePuzzle(puzzleData.type, puzzleData.items, puzzleGrid);
+        
+        puzzleContainer.classList.add('active');
+        this.gameState = 'puzzle';
+    }
+
+    initThreeJS() {
+        const container = document.getElementById('game-container');
+        
+        // Clear previous renderer
+        if (this.renderer) {
+            container.removeChild(this.renderer.domElement);
+        }
+        
+        // Scene
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0x0a0a15);
+
+        // Camera
+        this.camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        this.camera.position.set(0, 2, 5);
+
+        // Renderer
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setSize(container.clientWidth, container.clientHeight);
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(this.renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+        this.scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(10, 10, 5);
+        directionalLight.castShadow = true;
+        this.scene.add(directionalLight);
+
+        // Create environment based on chapter
+        this.createChapterEnvironment(this.currentChapter);
+
+        // Start render loop
+        this.animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => this.onWindowResize());
+    }
+
+    createChapterEnvironment(chapterNumber) {
+        // Ground
+        const groundGeometry = new THREE.PlaneGeometry(100, 100);
+        const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x2a2a3a });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        this.scene.add(ground);
+
+        // Chapter-specific environments
+        switch (chapterNumber) {
+            case 1:
+                this.createMumbaiOffice();
+                break;
+            case 2:
+                this.createLaboratory();
+                break;
+            default:
+                this.createDefaultEnvironment();
+        }
+    }
+
+    createMumbaiOffice() {
+        // Conference table
+        const tableGeometry = new THREE.BoxGeometry(4, 0.1, 2);
+        const tableMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+        const table = new THREE.Mesh(tableGeometry, tableMaterial);
+        table.position.y = 0.8;
+        table.castShadow = true;
+        this.scene.add(table);
+
+        // Chairs
+        for (let i = 0; i < 6; i++) {
+            const chairGeometry = new THREE.BoxGeometry(0.4, 0.8, 0.4);
+            const chairMaterial = new THREE.MeshLambertMaterial({ color: 0x654321 });
+            const chair = new THREE.Mesh(chairGeometry, chairMaterial);
+            chair.position.set((i % 3) * 1.5 - 1.5, 0.4, i < 3 ? -1.5 : 1.5);
+            chair.castShadow = true;
+            this.scene.add(chair);
+        }
+
+        // Presentation screen
+        const screenGeometry = new THREE.PlaneGeometry(3, 2);
+        const screenMaterial = new THREE.MeshLambertMaterial({ 
+            color: 0x000040,
+            emissive: 0x000020
+        });
+        const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+        screen.position.set(0, 2, -4);
+        this.scene.add(screen);
+    }
+
+    createLaboratory() {
+        // Lab equipment
+        for (let i = 0; i < 5; i++) {
+            const equipGeometry = new THREE.BoxGeometry(0.8, 1.5, 0.6);
+            const equipMaterial = new THREE.MeshLambertMaterial({ color: 0x4a4a4a });
+            const equipment = new THREE.Mesh(equipGeometry, equipMaterial);
+            equipment.position.set(i * 2 - 4, 0.75, -2);
+            equipment.castShadow = true;
+            this.scene.add(equipment);
+        }
+
+        // Computer screens
+        for (let i = 0; i < 3; i++) {
+            const screenGeometry = new THREE.PlaneGeometry(0.6, 0.4);
+            const screenMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x004400,
+                emissive: 0x002200
+            });
+            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+            screen.position.set(i * 2 - 2, 1.2, 1.5);
+            this.scene.add(screen);
+        }
+    }
+
+    createDefaultEnvironment() {
+        // Simple default objects
+        const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x6e44ff });
+        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        cube.position.y = 0.5;
+        cube.castShadow = true;
+        this.scene.add(cube);
+    }
+
+    animate() {
+        if (this.gameState === 'playing' || this.gameState === 'dialogue' || this.gameState === 'puzzle') {
+            requestAnimationFrame(() => this.animate());
+            this.renderer.render(this.scene, this.camera);
+        }
+    }
+
+    onWindowResize() {
+        const container = document.getElementById('game-container');
+        this.camera.aspect = container.clientWidth / container.clientHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    completeChapter(chapterNumber) {
+        this.playerData.progress[chapterNumber] = true;
+        this.savePlayerData();
+        
+        if (chapterNumber < 12) {
+            const nextChapter = chapterNumber + 1;
+            setTimeout(() => {
+                if (confirm(`Chapter ${chapterNumber} Complete!\n\nProceed to Chapter ${nextChapter}?`)) {
+                    this.startChapter(nextChapter);
+                } else {
+                    this.showMainMenu();
+                }
+            }, 2000);
+        } else {
+            this.showGameComplete();
+        }
+    }
+
+    showGameComplete() {
+        alert('Congratulations! You have completed The Padmanabha Enigma!\n\nसत्यम् शिवम् सुन्दरम्\n\nThank you for your journey through ancient wisdom and modern technology.');
+        this.showMainMenu();
+    }
+
+    updateProgress() {
+        const progressFill = document.getElementById('progress-fill');
+        const progress = (Object.keys(this.playerData.progress).length / 12) * 100;
+        progressFill.style.width = `${progress}%`;
+    }
+
+    interact() {
+        console.log('Interaction triggered');
+    }
+
+    toggleInventory() {
+        const inventoryPanel = document.getElementById('inventory-panel');
+        if (inventoryPanel.classList.contains('active')) {
+            inventoryPanel.classList.remove('active');
+        } else {
+            inventoryPanel.classList.add('active');
+            this.inventorySystem.render();
+        }
+    }
+
+    showPauseMenu() {
+        if (confirm('Game Paused. Return to main menu?')) {
+            this.returnToMainMenu();
+        }
+    }
+
+    returnToMainMenu() {
+        document.getElementById('game-interface').classList.remove('active');
+        document.getElementById('main-menu').classList.add('active');
+        this.gameState = 'menu';
+        
+        if (this.renderer) {
+            document.getElementById('game-container').removeChild(this.renderer.domElement);
+            this.renderer = null;
+        }
+    }
+
+    savePlayerData() {
+        localStorage.setItem('eternitytech_progress', JSON.stringify(this.playerData.progress));
+        localStorage.setItem('eternitytech_inventory', JSON.stringify(this.playerData.inventory));
+        localStorage.setItem('eternitytech_settings', JSON.stringify(this.playerData.settings));
+    }
+}
+
+// Puzzle System
+class PuzzleSystem {
+    generatePuzzle(type, items, container) {
+        container.innerHTML = '';
+        
+        switch (type) {
+            case 'sanskrit_sequence':
+                this.generateSequencePuzzle(items, container);
+                break;
+            case 'escape_route':
+                this.generatePathPuzzle(items, container);
+                break;
+            case 'cipher_decode':
+                this.generateCipherPuzzle(items, container);
+                break;
+            case 'medical_formula':
+                this.generateFormulaPuzzle(items, container);
+                break;
+            default:
+                this.generateDefaultPuzzle(items, container);
+        }
+    }
+
+    generateSequencePuzzle(items, container) {
+        container.style.gridTemplateColumns = `repeat(${Math.ceil(items.length / 2)}, 1fr)`;
+        
+        // Shuffle items
+        const shuffledItems = [...items].sort(() => Math.random() - 0.5);
+        
+        shuffledItems.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.textContent = item;
+            puzzleItem.dataset.index = index;
+            puzzleItem.dataset.correct = items.indexOf(item);
+            
+            puzzleItem.addEventListener('click', () => {
+                document.querySelectorAll('.puzzle-item').forEach(el => el.classList.remove('selected'));
+                puzzleItem.classList.add('selected');
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generatePathPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.textContent = item;
+            puzzleItem.dataset.index = index;
+            
+            puzzleItem.addEventListener('click', () => {
+                if (item === 'Temple' || item === 'Prayer Hall') {
+                    puzzleItem.classList.add('correct');
+                    setTimeout(() => {
+                        this.solvePuzzle();
+                    }, 1000);
+                } else {
+                    puzzleItem.style.backgroundColor = '#ff4466';
+                    setTimeout(() => {
+                        puzzleItem.style.backgroundColor = '';
+                    }, 1000);
+                }
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generateCipherPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.innerHTML = `<span class="sanskrit">${item}</span>`;
+            puzzleItem.dataset.index = index;
+            
+            puzzleItem.addEventListener('click', () => {
+                puzzleItem.classList.toggle('selected');
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generateFormulaPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.innerHTML = `<span class="sanskrit">${item}</span>`;
+            puzzleItem.dataset.index = index;
+            puzzleItem.dataset.order = index;
+            
+            puzzleItem.addEventListener('click', () => {
+                document.querySelectorAll('.puzzle-item').forEach(el => el.classList.remove('selected'));
+                puzzleItem.classList.add('selected');
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generateDefaultPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.textContent = item;
+            puzzleItem.dataset.index = index;
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    solvePuzzle() {
+        document.getElementById('puzzle-container').classList.remove('active');
+        
+        const chapterData = window.game.chapterData[window.game.currentChapter];
+        const sceneData = chapterData.scenes[window.game.currentScene];
+        sceneData.action();
+    }
+}
+
+// Inventory System
+class InventorySystem {
+    constructor() {
+        this.items = [];
+        this.maxSlots = 16;
+    }
+
+    render() {
+        const inventoryGrid = document.getElementById('inventory-grid');
+        inventoryGrid.innerHTML = '';
+
+        for (let i = 0; i < this.maxSlots; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'inventory-slot';
+            
+            if (this.items[i]) {
+                slot.classList.add('occupied');
+                slot.innerHTML = `<i class="fas fa-${this.items[i].icon}"></i>`;
+                slot.title = this.items[i].name;
+            }
+
+            inventoryGrid.appendChild(slot);
+        }
+    }
+
+    addItem(item) {
+        if (this.items.length < this.maxSlots) {
+            this.items.push(item);
+            return true;
+        }
+        return false;
+    }
+}
+
+// Global Functions
+function skipBackstory() {
+    document.getElementById('backstory-screen').classList.remove('active');
+    window.game.showMainMenu();
+}
+
+function startNewGame() {
+    window.game.startNewGame();
+}
+
+function continueGame() {
+    window.game.continueGame();
+}
+
+function showChapterSelect() {
+    alert('Chapter selection coming soon! For now, start a new game to play through all chapters.');
+}
+
+function showSettings() {
+    alert('Settings menu coming soon!');
+}
+
+function showCredits() {
+    alert('Eternity Tech: The Padmanabha Enigma\n\nA game combining ancient Sanskrit wisdom with modern quantum computing.\n\nInspired by the rich cultural heritage of India and the unlimited potential of technology.\n\nसत्यम् शिवम् सुन्दरम्');
+}
+
+function checkPuzzle() {
+    const selectedItems = document.querySelectorAll('.puzzle-item.selected');
+    if (selectedItems.length > 0) {
+        window.game.puzzleSystem.solvePuzzle();
+    } else {
+        alert('Please select items to solve the puzzle!');
+    }
+}
+
+function resetPuzzle() {
+    document.querySelectorAll('.puzzle-item').forEach(item => {
+        item.classList.remove('selected', 'correct');
+        item.style.backgroundColor = '';
+    });
+}
+
+function closePuzzle() {
+    document.getElementById('puzzle-container').classList.remove('active');
+    window.game.gameState = 'playing';
+}
+
+function closeInventory() {
+    document.getElementById('inventory-panel').classList.remove('active');
+}
+
+// Initialize the game when the page loads
+window.addEventListener('load', () => {
+    window.game = new EternityTechGame();
+});
+</script>
+</body>
+</html>
