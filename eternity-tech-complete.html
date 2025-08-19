@@ -2040,6 +2040,146 @@ class PuzzleSystem {
                 this.generateDefaultPuzzle(items, container);
         }
     }
+
+    generateSequencePuzzle(items, container) {
+        container.style.gridTemplateColumns = `repeat(${Math.ceil(items.length / 2)}, 1fr)`;
+        
+        // Shuffle items
+        const shuffledItems = [...items].sort(() => Math.random() - 0.5);
+        
+        shuffledItems.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.textContent = item;
+            puzzleItem.dataset.index = index;
+            puzzleItem.dataset.correct = items.indexOf(item);
+            
+            puzzleItem.addEventListener('click', () => {
+                document.querySelectorAll('.puzzle-item').forEach(el => el.classList.remove('selected'));
+                puzzleItem.classList.add('selected');
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generatePathPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.textContent = item;
+            puzzleItem.dataset.index = index;
+            
+            puzzleItem.addEventListener('click', () => {
+                if (item === 'Temple' || item === 'Prayer Hall') {
+                    puzzleItem.classList.add('correct');
+                    setTimeout(() => {
+                        this.solvePuzzle();
+                    }, 1000);
+                } else {
+                    puzzleItem.style.backgroundColor = '#ff4466';
+                    setTimeout(() => {
+                        puzzleItem.style.backgroundColor = '';
+                    }, 1000);
+                }
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generateCipherPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.innerHTML = `<span class="sanskrit">${item}</span>`;
+            puzzleItem.dataset.index = index;
+            
+            puzzleItem.addEventListener('click', () => {
+                puzzleItem.classList.toggle('selected');
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generateFormulaPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.innerHTML = `<span class="sanskrit">${item}</span>`;
+            puzzleItem.dataset.index = index;
+            puzzleItem.dataset.order = index;
+            
+            puzzleItem.addEventListener('click', () => {
+                document.querySelectorAll('.puzzle-item').forEach(el => el.classList.remove('selected'));
+                puzzleItem.classList.add('selected');
+            });
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    generateDefaultPuzzle(items, container) {
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        
+        items.forEach((item, index) => {
+            const puzzleItem = document.createElement('div');
+            puzzleItem.className = 'puzzle-item';
+            puzzleItem.textContent = item;
+            puzzleItem.dataset.index = index;
+            
+            container.appendChild(puzzleItem);
+        });
+    }
+
+    solvePuzzle() {
+        document.getElementById('puzzle-container').classList.remove('active');
+        
+        const chapterData = window.game.chapterData[window.game.currentChapter];
+        const sceneData = chapterData.scenes[window.game.currentScene];
+        sceneData.action();
+    }
+}
+
+// Inventory System
+class InventorySystem {
+    constructor() {
+        this.items = [];
+        this.maxSlots = 16;
+    }
+
+    render() {
+        const inventoryGrid = document.getElementById('inventory-grid');
+        inventoryGrid.innerHTML = '';
+
+        for (let i = 0; i < this.maxSlots; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'inventory-slot';
+            
+            if (this.items[i]) {
+                slot.classList.add('occupied');
+                slot.innerHTML = `<i class="fas fa-${this.items[i].icon}"></i>`;
+                slot.title = this.items[i].name;
+            }
+
+            inventoryGrid.appendChild(slot);
+        }
+    }
+
+    addItem(item) {
+        if (this.items.length < this.maxSlots) {
+            this.items.push(item);
+            return true;
+        }
+        return false;
+    }
 }
 
 // Global Functions
@@ -2069,47 +2209,11 @@ function showCredits() {
 }
 
 function checkPuzzle() {
-    const puzzleSystem = window.game.puzzleSystem;
-    const type = puzzleSystem.currentType;
-    const items = puzzleSystem.currentItems;
-    if (type === 'sanskrit_sequence' || type === 'medical_formula') {
-        if (!puzzleSystem.getSequenceOrder) {
-            alert('Please select items to solve the puzzle!');
-            return;
-        }
-        const selected = puzzleSystem.getSequenceOrder();
-        if (selected.length !== items.length) {
-            alert('Select all items in order!');
-            return;
-        }
-        // Check order
-        let correct = true;
-        for (let i = 0; i < items.length; i++) {
-            if (selected[i] !== items[i]) {
-                correct = false;
-                break;
-            }
-        }
-        if (correct) {
-            puzzleSystem.solvePuzzle();
-        } else {
-            alert('Incorrect order! Try again.');
-        }
-    } else if (type === 'escape_route' || type === 'cipher_decode') {
-        const selectedItems = document.querySelectorAll('.puzzle-item.selected');
-        if (selectedItems.length > 0) {
-            puzzleSystem.solvePuzzle();
-        } else {
-            alert('Please select items to solve the puzzle!');
-        }
+    const selectedItems = document.querySelectorAll('.puzzle-item.selected');
+    if (selectedItems.length > 0) {
+        window.game.puzzleSystem.solvePuzzle();
     } else {
-        // fallback
-        const selectedItems = document.querySelectorAll('.puzzle-item.selected');
-        if (selectedItems.length > 0) {
-            puzzleSystem.solvePuzzle();
-        } else {
-            alert('Please select items to solve the puzzle!');
-        }
+        alert('Please select items to solve the puzzle!');
     }
 }
 
