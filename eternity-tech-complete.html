@@ -1056,94 +1056,94 @@ class EternityTechGame {
                 }
             },
             3: {
-    title: "The Arora Gambit",
-    location: "Mumbai - Chase Sequence",
-    scenes: {
-      1: {
-        title: "Under Siege - Eternity Tech Office",
-        dialogues: [
-          { character: "Sakshi", text: "Our life's work... destroyed by lies.", emotion: "frustrated" },
-          { character: "Krishna", text: "Truth will emerge. But first, we survive.", emotion: "determined" },
-          { character: "Ramesh", text: "Sir, back exit is clear. But police coming soon.", emotion: "loyal" },
-          { character: "Krishna", text: "Ramesh bhai, thank you. Take care of our employees.", emotion: "grateful" }
-        ],
-        puzzle: {
-          type: "stealth_escape",
-          title: "Escape Plan",
-          description: "Choose the correct exit route to avoid police detection",
-          items: ["Back Exit", "Front Door", "Rooftop", "Basement"]
-        },
-        action: () => startChapterScene(3, 2)
-      },
-      2: {
-        title: "Chase Through Dharavi",
-        dialogues: [
-          { character: "Viren's Agent", text: "Target spotted! Sector 7!", emotion: "radio" },
-          { character: "Krishna", text: "Remember our college parkour training?", emotion: "urgent" },
-          { character: "Sakshi", text: "I was always faster than you!", emotion: "grinning" },
-          { character: "Local Kid", text: "Uncle, this way! Police nahi jayenge!", emotion: "helpful" },
-          { character: "Krishna", text: "धन्यवाद, बेटा!", emotion: "grateful" }
-        ],
-        puzzle: {
-          type: "parkour_path",
-          title: "Navigate the Slums",
-          description: "Select correct path to evade pursuers",
-          items: ["Rooftops", "Alleyways", "Streets", "Sewers"]
-        },
-        action: () => startChapterScene(3, 3)
-      },
-      3: {
-        title: "Hideout in Ancient Temple",
-        dialogues: [
-          { character: "Sakshi", text: "Bhai, I'm scared. What if our technology really does get misused?", emotion: "worried" },
-          { character: "Krishna", text: "Every discovery can be weapon or blessing. Depends on who holds it.", emotion: "serious" },
-          { character: "Sakshi", text: "Then we make sure right people hold it.", emotion: "determined" },
-          { character: "Krishna", text: "Promise. Knowledge belongs to humanity, not to those who would cage it for profit.", emotion: "solemn" }
-        ],
-        puzzle: {
-          type: "moral_choice",
-          title: "Trust Decision",
-          description: "Choose whom to trust with your technology",
-          items: ["Scientists", "Government", "Public", "Private Firms"]
-        },
-        action: () => startChapterScene(3, 4)
-      },
-      4: {
-        title: "Laxman's Video Call",
-        dialogues: [
-          { character: "Laxman", text: "Yaar Krishna! News mein dekha. Are you both okay?", emotion: "concerned" },
-          { character: "Krishna", text: "Alive, but barely. Laxman, we need to go to Kerala.", emotion: "serious" },
-          { character: "Laxman", text: "Kerala? For vacation? At this time?", emotion: "surprised" },
-          { character: "Sakshi", text: "It's complicated, Laxman bhaiya.", emotion: "smiling" },
-          { character: "Laxman", text: "Whatever it is, I'm with you. Sole Mate has transport network all over South India. Use it.", emotion: "supportive" },
-          { character: "Laxman", text: "Emergency alert system. If you're in trouble, press button twice. I'll come running.", emotion: "serious" },
-          { character: "Krishna", text: "True friend. सच्चा मित्र।", emotion: "emotional" }
-        ],
-        puzzle: {
-          type: "emergency_alert",
-          title: "Set Alert",
-          description: "Protocol for emergency response activation",
-          items: ["Press once", "Press twice", "Hold button", "Ignore"]
-        },
-        action: () => startChapterScene(3, 5)
-      },
-      5: {
-        title: "Departure Decision",
-        dialogues: [
-          { character: "Sakshi", text: "Once we board this train, there's no going back.", emotion: "nervous" },
-          { character: "Krishna", text: "Parth ji died for this truth. We finish his mission.", emotion: "determined" },
-          { character: "Station Announcement", text: "Kerala Express departing Platform 3!", emotion: "announcement" },
-          { character: "Krishna", text: "हे भगवान, guide us on this path. Protect us, protect the knowledge, protect humanity.", emotion: "praying" }
-        ],
-        puzzle: {
-          type: "timing_decision",
-          title: "Board the Train",
-          description: "Choose the right moment to board safely",
-          items: ["Immediately", "Wait for 5 min", "Wait for police to leave", "Change platform"]
-        },
-        action: () => startChapterScene(4, 1)
-      }
-    }
+        title: "The Arora Gambit",
+        location: "Mumbai - Chase Sequence",
+        scenes: {
+            1: {
+                title: "Under Siege - Eternity Tech Office",
+                dialogues: [
+                    { character: "Sakshi", text: "Our life's work... destroyed by lies.", emotion: "frustrated" },
+                    { character: "Krishna", text: "Truth will emerge. But first, we survive.", emotion: "determined" },
+                    { character: "Ramesh", text: "Sir, back exit is clear. But police coming soon.", emotion: "loyal" },
+                    { character: "Krishna", text: "Ramesh bhai, thank you. Take care of our employees.", emotion: "grateful" }
+                ],
+                puzzle: {
+                    type: "stealth_escape",
+                    title: "Escape Plan",
+                    description: "Choose the correct exit route to avoid police detection",
+                    items: ["Back Exit", "Front Door", "Rooftop", "Basement"]
+                },
+                action: function() { this.startChapterScene(3, 2); }
+            },
+            2: {
+                title: "Chase Through Dharavi",
+                dialogues: [
+                    { character: "Viren's Agent", text: "Target spotted! Sector 7!", emotion: "radio" },
+                    { character: "Krishna", text: "Remember our college parkour training?", emotion: "urgent" },
+                    { character: "Sakshi", text: "I was always faster than you!", emotion: "grinning" },
+                    { character: "Local Kid", text: "Uncle, this way! Police nahi jayenge!", emotion: "helpful" },
+                    { character: "Krishna", text: "धन्यवाद, बेटा!", emotion: "grateful" }
+                ],
+                puzzle: {
+                    type: "parkour_path",
+                    title: "Navigate the Slums",
+                    description: "Select correct path to evade pursuers",
+                    items: ["Rooftops", "Alleyways", "Streets", "Sewers"]
+                },
+                action: function() { this.startChapterScene(3, 3); }
+            },
+            3: {
+                title: "Hideout in Ancient Temple",
+                dialogues: [
+                    { character: "Sakshi", text: "Bhai, I'm scared. What if our technology really does get misused?", emotion: "worried" },
+                    { character: "Krishna", text: "Every discovery can be weapon or blessing. Depends on who holds it.", emotion: "serious" },
+                    { character: "Sakshi", text: "Then we make sure right people hold it.", emotion: "determined" },
+                    { character: "Krishna", text: "Promise. Knowledge belongs to humanity, not to those who would cage it for profit.", emotion: "solemn" }
+                ],
+                puzzle: {
+                    type: "moral_choice",
+                    title: "Trust Decision",
+                    description: "Choose whom to trust with your technology",
+                    items: ["Scientists", "Government", "Public", "Private Firms"]
+                },
+                action: function() { this.startChapterScene(3, 4); }
+            },
+            4: {
+                title: "Laxman's Video Call",
+                dialogues: [
+                    { character: "Laxman", text: "Yaar Krishna! News mein dekha. Are you both okay?", emotion: "concerned" },
+                    { character: "Krishna", text: "Alive, but barely. Laxman, we need to go to Kerala.", emotion: "serious" },
+                    { character: "Laxman", text: "Kerala? For vacation? At this time?", emotion: "surprised" },
+                    { character: "Sakshi", text: "It's complicated, Laxman bhaiya.", emotion: "smiling" },
+                    { character: "Laxman", text: "Whatever it is, I'm with you. Sole Mate has transport network all over South India. Use it.", emotion: "supportive" },
+                    { character: "Laxman", text: "Emergency alert system. If you're in trouble, press button twice. I'll come running.", emotion: "serious" },
+                    { character: "Krishna", text: "True friend. सच्चा मित्र।", emotion: "emotional" }
+                ],
+                puzzle: {
+                    type: "emergency_alert",
+                    title: "Set Alert",
+                    description: "Protocol for emergency response activation",
+                    items: ["Press once", "Press twice", "Hold button", "Ignore"]
+                },
+                action: function() { this.startChapterScene(3, 5); }
+            },
+            5: {
+                title: "Departure Decision",
+                dialogues: [
+                    { character: "Sakshi", text: "Once we board this train, there's no going back.", emotion: "nervous" },
+                    { character: "Krishna", text: "Parth ji died for this truth. We finish his mission.", emotion: "determined" },
+                    { character: "Station Announcement", text: "Kerala Express departing Platform 3!", emotion: "announcement" },
+                    { character: "Krishna", text: "हे भगवान, guide us on this path. Protect us, protect the knowledge, protect humanity.", emotion: "praying" }
+                ],
+                puzzle: {
+                    type: "timing_decision",
+                    title: "Board the Train",
+                    description: "Choose the right moment to board safely",
+                    items: ["Immediately", "Wait for 5 min", "Wait for police to leave", "Change platform"]
+                },
+                action: function() { this.startChapterScene(4, 1); }
+            }
+        }
 },
 
         4: {
@@ -2040,146 +2040,6 @@ class PuzzleSystem {
                 this.generateDefaultPuzzle(items, container);
         }
     }
-
-    generateSequencePuzzle(items, container) {
-        container.style.gridTemplateColumns = `repeat(${Math.ceil(items.length / 2)}, 1fr)`;
-        
-        // Shuffle items
-        const shuffledItems = [...items].sort(() => Math.random() - 0.5);
-        
-        shuffledItems.forEach((item, index) => {
-            const puzzleItem = document.createElement('div');
-            puzzleItem.className = 'puzzle-item';
-            puzzleItem.textContent = item;
-            puzzleItem.dataset.index = index;
-            puzzleItem.dataset.correct = items.indexOf(item);
-            
-            puzzleItem.addEventListener('click', () => {
-                document.querySelectorAll('.puzzle-item').forEach(el => el.classList.remove('selected'));
-                puzzleItem.classList.add('selected');
-            });
-            
-            container.appendChild(puzzleItem);
-        });
-    }
-
-    generatePathPuzzle(items, container) {
-        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        
-        items.forEach((item, index) => {
-            const puzzleItem = document.createElement('div');
-            puzzleItem.className = 'puzzle-item';
-            puzzleItem.textContent = item;
-            puzzleItem.dataset.index = index;
-            
-            puzzleItem.addEventListener('click', () => {
-                if (item === 'Temple' || item === 'Prayer Hall') {
-                    puzzleItem.classList.add('correct');
-                    setTimeout(() => {
-                        this.solvePuzzle();
-                    }, 1000);
-                } else {
-                    puzzleItem.style.backgroundColor = '#ff4466';
-                    setTimeout(() => {
-                        puzzleItem.style.backgroundColor = '';
-                    }, 1000);
-                }
-            });
-            
-            container.appendChild(puzzleItem);
-        });
-    }
-
-    generateCipherPuzzle(items, container) {
-        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        
-        items.forEach((item, index) => {
-            const puzzleItem = document.createElement('div');
-            puzzleItem.className = 'puzzle-item';
-            puzzleItem.innerHTML = `<span class="sanskrit">${item}</span>`;
-            puzzleItem.dataset.index = index;
-            
-            puzzleItem.addEventListener('click', () => {
-                puzzleItem.classList.toggle('selected');
-            });
-            
-            container.appendChild(puzzleItem);
-        });
-    }
-
-    generateFormulaPuzzle(items, container) {
-        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        
-        items.forEach((item, index) => {
-            const puzzleItem = document.createElement('div');
-            puzzleItem.className = 'puzzle-item';
-            puzzleItem.innerHTML = `<span class="sanskrit">${item}</span>`;
-            puzzleItem.dataset.index = index;
-            puzzleItem.dataset.order = index;
-            
-            puzzleItem.addEventListener('click', () => {
-                document.querySelectorAll('.puzzle-item').forEach(el => el.classList.remove('selected'));
-                puzzleItem.classList.add('selected');
-            });
-            
-            container.appendChild(puzzleItem);
-        });
-    }
-
-    generateDefaultPuzzle(items, container) {
-        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        
-        items.forEach((item, index) => {
-            const puzzleItem = document.createElement('div');
-            puzzleItem.className = 'puzzle-item';
-            puzzleItem.textContent = item;
-            puzzleItem.dataset.index = index;
-            
-            container.appendChild(puzzleItem);
-        });
-    }
-
-    solvePuzzle() {
-        document.getElementById('puzzle-container').classList.remove('active');
-        
-        const chapterData = window.game.chapterData[window.game.currentChapter];
-        const sceneData = chapterData.scenes[window.game.currentScene];
-        sceneData.action();
-    }
-}
-
-// Inventory System
-class InventorySystem {
-    constructor() {
-        this.items = [];
-        this.maxSlots = 16;
-    }
-
-    render() {
-        const inventoryGrid = document.getElementById('inventory-grid');
-        inventoryGrid.innerHTML = '';
-
-        for (let i = 0; i < this.maxSlots; i++) {
-            const slot = document.createElement('div');
-            slot.className = 'inventory-slot';
-            
-            if (this.items[i]) {
-                slot.classList.add('occupied');
-                slot.innerHTML = `<i class="fas fa-${this.items[i].icon}"></i>`;
-                slot.title = this.items[i].name;
-            }
-
-            inventoryGrid.appendChild(slot);
-        }
-    }
-
-    addItem(item) {
-        if (this.items.length < this.maxSlots) {
-            this.items.push(item);
-            return true;
-        }
-        return false;
-    }
 }
 
 // Global Functions
@@ -2209,11 +2069,47 @@ function showCredits() {
 }
 
 function checkPuzzle() {
-    const selectedItems = document.querySelectorAll('.puzzle-item.selected');
-    if (selectedItems.length > 0) {
-        window.game.puzzleSystem.solvePuzzle();
+    const puzzleSystem = window.game.puzzleSystem;
+    const type = puzzleSystem.currentType;
+    const items = puzzleSystem.currentItems;
+    if (type === 'sanskrit_sequence' || type === 'medical_formula') {
+        if (!puzzleSystem.getSequenceOrder) {
+            alert('Please select items to solve the puzzle!');
+            return;
+        }
+        const selected = puzzleSystem.getSequenceOrder();
+        if (selected.length !== items.length) {
+            alert('Select all items in order!');
+            return;
+        }
+        // Check order
+        let correct = true;
+        for (let i = 0; i < items.length; i++) {
+            if (selected[i] !== items[i]) {
+                correct = false;
+                break;
+            }
+        }
+        if (correct) {
+            puzzleSystem.solvePuzzle();
+        } else {
+            alert('Incorrect order! Try again.');
+        }
+    } else if (type === 'escape_route' || type === 'cipher_decode') {
+        const selectedItems = document.querySelectorAll('.puzzle-item.selected');
+        if (selectedItems.length > 0) {
+            puzzleSystem.solvePuzzle();
+        } else {
+            alert('Please select items to solve the puzzle!');
+        }
     } else {
-        alert('Please select items to solve the puzzle!');
+        // fallback
+        const selectedItems = document.querySelectorAll('.puzzle-item.selected');
+        if (selectedItems.length > 0) {
+            puzzleSystem.solvePuzzle();
+        } else {
+            alert('Please select items to solve the puzzle!');
+        }
     }
 }
 
