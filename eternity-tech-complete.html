@@ -1345,7 +1345,11 @@ class EternityTechGame {
                         { character: "Serpent Guardian", text: "पुत्र, this path leads to destruction.", emotion: "mystical_voice" },
                         { character: "Krishna", text: "Naag devata, I seek only to save my sister and protect sacred knowledge.", emotion: "respectful" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "light_pattern",
+                        title: "Divine Light Puzzle",
+                        description: "Follow the sequence of mysterious lights to avoid hidden traps"
+                    },
                     action: () => this.startChapterScene(7, 3)
                 },
                 3: {
@@ -1356,7 +1360,11 @@ class EternityTechGame {
                         { character: "Young Sakshi", text: "I'll always be here to help you understand.", emotion: "supportive" },
                         { character: "Krishna", text: "I understand now, choti. Language, coding, spirituality—all connected. Just like us.", emotion: "smiling" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "memory_sequence",
+                        title: "Sibling Sanskrit Code",
+                        description: "Recall the correct sequence of Sanskrit syllables from childhood lessons"
+                    },
                     action: () => this.startChapterScene(7, 4)
                 },
                 4: {
@@ -1365,7 +1373,11 @@ class EternityTechGame {
                         { character: "Krishna", text: "Vishnu bhagwan, grant me strength. Not for myself, but for dharma.", emotion: "praying" },
                         { character: "Krishna", text: "Divine intervention... or perfect engineering? Maybe both.", emotion: "awed" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "water_level_control",
+                        title: "Reveal Hidden Passage",
+                        description: "Manually adjust valves to lower water and access Vault B"
+                    },
                     action: () => this.startChapterScene(8, 1)
                 }
             }
@@ -1383,7 +1395,11 @@ class EternityTechGame {
                         { character: "Viren", text: "Your brother is probably dead in those flooded tunnels.", emotion: "mocking" },
                         { character: "Sakshi", text: "Krishna never gives up. Neither do I.", emotion: "confident" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "escape_sequence",
+                        title: "Deceive Captors",
+                        description: "Arrange false Sanskrit translations to stall Viren's team"
+                    },
                     action: () => this.startChapterScene(8, 2)
                 },
                 2: {
@@ -1394,7 +1410,11 @@ class EternityTechGame {
                         { character: "Viren", text: "You're stalling.", emotion: "suspicious" },
                         { character: "Sakshi", text: "Ancient knowledge can't be rushed. Force it, and it destroys itself.", emotion: "warning" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "code_deception",
+                        title: "Craft False Algorithm",
+                        description: "Create a misleading code to confuse attackers"
+                    },
                     action: () => this.startChapterScene(8, 3)
                 },
                 3: {
@@ -1403,7 +1423,11 @@ class EternityTechGame {
                         { character: "Krishna", text: "'भाई, वॉल्ट बी में जाल है' (Brother, Vault B is trapped). She's warning me.", emotion: "reading" },
                         { character: "Krishna", text: "Even in captivity, she's protecting the mission. My brave little sister.", emotion: "emotional" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "hidden_message",
+                        title: "Decode Warning",
+                        description: "Use Sanskrit wordplay to uncover Sakshi's secret warning"
+                    },
                     action: () => this.startChapterScene(8, 4)
                 },
                 4: {
@@ -1412,7 +1436,11 @@ class EternityTechGame {
                         { character: "Krishna", text: "Corona virus... engineered. Millions died for his profit. Monster!", emotion: "horrified" },
                         { character: "Krishna", text: "He's been erasing humanity's healing wisdom to maintain monopoly. Not anymore.", emotion: "determined" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "research_puzzle",
+                        title: "Expose Conspiracy",
+                        description: "Piece together documents to reveal Viren's plan"
+                    },
                     action: () => this.startChapterScene(9, 1)
                 }
             }
@@ -1427,7 +1455,11 @@ class EternityTechGame {
                     dialogues: [
                         { character: "Krishna", text: "Watch is dead... but if signal went through...", emotion: "noticing" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "emergency_signal",
+                        title: "Send Distress Signal",
+                        description: "Repair watch circuits to send emergency signal"
+                    },
                     action: () => this.startChapterScene(9, 2)
                 },
                 2: {
@@ -1437,7 +1469,11 @@ class EternityTechGame {
                         { character: "Employee", text: "Sir, Kerala is far. Should we inform police?", emotion: "concerned" },
                         { character: "Laxman", text: "Police won't understand. This needs street-smart solution.", emotion: "decisive" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "navigation_puzzle",
+                        title: "Plan Route",
+                        description: "Plot the fastest way through South India's transport network"
+                    },
                     action: () => this.startChapterScene(9, 3)
                 },
                 3: {
@@ -1449,7 +1485,11 @@ class EternityTechGame {
                         { character: "Krishna", text: "Sakshi's captured. I need help.", emotion: "urgent" },
                         { character: "Laxman", text: "Then let's go get our girl back.", emotion: "serious" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "equipment_puzzle",
+                        title: "Prepare Gear",
+                        description: "Select the right equipment from pack for temple rescue"
+                    },
                     action: () => this.startChapterScene(9, 4)
                 },
                 4: {
@@ -1460,7 +1500,11 @@ class EternityTechGame {
                         { character: "Krishna", text: "This isn't game, yaar. People could die.", emotion: "serious" },
                         { character: "Laxman", text: "People are already dying from his engineered diseases. Time to stop talking, start acting.", emotion: "motivational" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "strategy_planning",
+                        title: "Map the Rescue",
+                        description: "Plan the infiltration route to avoid high security zones"
+                    },
                     action: () => this.startChapterScene(10, 1)
                 }
             }
@@ -1478,7 +1522,11 @@ class EternityTechGame {
                         { character: "Viren", text: "If the girl won't cooperate, kill her. We'll extract the knowledge by force.", emotion: "threatening" },
                         { character: "Krishna", text: "Over my dead body.", emotion: "enraged" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "stealth_puzzle",
+                        title: "Avoid Detection",
+                        description: "Navigate through the lab avoiding guards and cameras"
+                    },
                     action: () => this.startChapterScene(10, 2)
                 },
                 2: {
@@ -1488,7 +1536,11 @@ class EternityTechGame {
                         { character: "Laxman", text: "Our ancestors were doing experiments here?", emotion: "surprised" },
                         { character: "Krishna", text: "They weren't just spiritual—they were scientists! This knowledge could cure everything!", emotion: "excited" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "research_puzzle",
+                        title: "Analyze Artifacts",
+                        description: "Match ancient tools with their modern scientific equivalents"
+                    },
                     action: () => this.startChapterScene(10, 3)
                 },
                 3: {
@@ -1515,7 +1567,11 @@ class EternityTechGame {
                         { character: "Sakshi", text: "You're not God!", emotion: "defiant" },
                         { character: "Viren", text: "In the medical world, I am.", emotion: "domineering" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "final_confrontation",
+                        title: "Battle of Wits",
+                        description: "Outsmart Viren via quick strategic decisions"
+                    },
                     action: () => this.startChapterScene(11, 1)
                 }
             }
@@ -1532,7 +1588,11 @@ class EternityTechGame {
                         { character: "Viren", text: "Ancient wisdom is wasted on the masses! Only the elite deserve immortality!", emotion: "sneering" },
                         { character: "Sakshi", text: "Bhai, remember—our ancestors built escape routes!", emotion: "tactical" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "combat_strategy",
+                        title: "Tower Battle",
+                        description: "Use the environment and combat skills to overcome enemies"
+                    },
                     action: () => this.startChapterScene(11, 2)
                 },
                 2: {
@@ -1542,7 +1602,11 @@ class EternityTechGame {
                         { character: "Viren", text: "You street-smart fool! You don't understand its value!", emotion: "furious" },
                         { character: "Laxman", text: "I understand its value better than you. It's priceless because it's meant to be free.", emotion: "confident" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "artifact_heist",
+                        title: "Steal the Sutra",
+                        description: "Distract guards and retrieve the artifact"
+                    },
                     action: () => this.startChapterScene(11, 3)
                 },
                 3: {
@@ -1552,7 +1616,11 @@ class EternityTechGame {
                         { character: "Sakshi", text: "Bhai, remember what you taught me about leverage?", emotion: "calm" },
                         { character: "Sakshi", text: "Small doesn't mean weak. It means underestimated.", emotion: "defiant" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "escape_puzzle",
+                        title: "Sakshi's Escape",
+                        description: "Use environment clues and size advantage to escape"
+                    },
                     action: () => this.startChapterScene(11, 4)
                 },
                 4: {
@@ -1561,7 +1629,11 @@ class EternityTechGame {
                         { character: "Viren", text: "If I can't have it, no one can!", emotion: "falling" },
                         { character: "Krishna", text: "Greed has its own gravity. It pulls you down.", emotion: "resolute" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "final_choice",
+                        title: "Save or Let Fall",
+                        description: "Choose whether to save Viren or let him fall, affecting the story end"
+                    },
                     action: () => this.startChapterScene(12, 1)
                 }
             }
@@ -1589,7 +1661,11 @@ class EternityTechGame {
                         { character: "Sakshi", text: "We'll work with ethical scientists. Open source everything.", emotion: "dedicated" },
                         { character: "Krishna", text: "No patents, no monopolies. Just healing.", emotion: "determined" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "ethics_decision",
+                        title: "Set Research Policy",
+                        description: "Decide how to share the Vedic Sutra knowledge with the world"
+                    },
                     action: () => this.startChapterScene(12, 3)
                 },
                 3: {
@@ -1621,12 +1697,16 @@ class EternityTechGame {
                         { character: "Sakshi", text: "Bhai taught me coding. God taught us purpose.", emotion: "reflective" },
                         { character: "Krishna", text: "True treasure isn't gold or technology. It's knowledge shared with love, wisdom applied with compassion, and bonds that transcend everything else.", emotion: "voice_over" }
                     ],
-                    puzzle: null,
+                    puzzle: {
+                        type: "final_reflection",
+                        title: "Meditation",
+                        description: "Reflect on the journey and commit to the path ahead"
+                    },
                     action: () => this.endGame()
                 }
             }
         }
-            // Additional chapters would continue here...
+            //game over
         };
     }
 
