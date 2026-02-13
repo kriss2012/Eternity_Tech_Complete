@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0f1f">
     <title>Eternity Tech: The Padmanabha Enigma</title>
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -131,7 +135,56 @@
         /* HUD Elements */
         .game-hud { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 200; }
         .game-hud > * { pointer-events: auto; }
-        .hud-element { position: absolute; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); transition: opacity 0.5s, transform 0.5s; }
+        .hud-element {
+            position: absolute;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        .hud-top-right {
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: 150px;
+            z-index: 150;
+        }
+        
+        .reopen-btn {
+            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(74, 255, 209, 0.2), rgba(0, 242, 254, 0.2));
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 36px;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .reopen-btn:hover {
+            background: linear-gradient(135deg, rgba(74, 255, 209, 0.4), rgba(0, 242, 254, 0.4));
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(74, 255, 209, 0.3);
+        }
+        
+        .reopen-btn.hide-reopen {
+            display: none;
+        }
         .chapter-info-hud { top: 20px; left: 20px; }
         .chapter-info-hud h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--color-accent); font-family: 'Orbitron'; }
 
@@ -141,6 +194,82 @@
         .character-name { font-size: 1.2rem; font-weight: 600; color: var(--color-accent); margin-bottom: 12px; }
         .dialogue-text { font-size: 1.1rem; line-height: 1.6; margin-bottom: 16px; min-height: 60px; }
         .dialogue-continue { text-align: right; font-size: 0.8rem; color: var(--color-text-secondary); animation: pulse 2s infinite; }
+        
+        /* On-screen touch indicator and mobile hints */
+        .touch-indicator {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 2rem;
+            animation: tapPulse 1.5s infinite;
+            z-index: 50;
+            pointer-events: none;
+        }
+        @keyframes tapPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        .mobile-hint {
+            display: none;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            text-align: center;
+            margin-top: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .hud-top-right {
+                top: 16px;
+                right: 16px;
+                gap: 8px;
+                max-width: 100%;
+            }
+            .reopen-btn {
+                padding: 6px 10px;
+                font-size: 0.7rem;
+                min-height: 32px;
+                min-width: 70px;
+                flex: 1 1 auto;
+            }
+            .mobile-hint {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hud-top-right {
+                top: 12px;
+                right: 12px;
+                gap: 6px;
+            }
+            .reopen-btn {
+                padding: 5px 8px;
+                font-size: 0.65rem;
+                min-height: 28px;
+                min-width: 60px;
+            }
+            .mobile-hint {
+                display: block;
+            }
+        }
+
+        /* Backstory adjustments for mobile */
+        @media (max-width: 768px) {
+            .backstory-text {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            .backstory-skip {
+                top: 16px;
+                right: 16px;
+                padding: 12px 16px;
+                font-size: 0.85rem;
+                min-width: 90px;
+                min-height: 44px;
+            }
+        }
         .emotion-excited { border-left: 3px solid var(--color-success); }
         .emotion-worried { border-left: 3px solid var(--color-danger); }
         .emotion-determined { border-left: 3px solid var(--color-primary); }
@@ -175,6 +304,321 @@
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         .puzzle-container.incorrect { animation: shake 0.5s; }
         @keyframes shake { 0%, 100% { transform: translate(-50%, -50%); } 25% { transform: translate(-52%, -50%); } 75% { transform: translate(-48%, -50%); } }
+
+        /* --- Mobile Touch Optimization --- */
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .menu-button, .puzzle-item, .cipher-ring, .backstory-skip {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mobile-Responsive Design */
+        @media (max-width: 1024px) {
+            .game-title {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+            }
+            .ui-modal {
+                width: 95%;
+                padding: 30px 20px;
+                border-radius: 12px;
+            }
+            .menu-buttons {
+                min-width: 200px;
+            }
+            .menu-button {
+                padding: 14px 24px;
+                font-size: 1rem;
+            }
+            .puzzle-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+            .puzzle-item {
+                padding: 12px 10px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                font-size: 14px;
+            }
+            .game-title {
+                font-size: clamp(1.3rem, 5vw, 2.2rem);
+                margin-bottom: 12px;
+            }
+            .game-subtitle {
+                font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+                margin-bottom: 20px;
+            }
+            .ui-modal {
+                width: 96%;
+                padding: 24px 16px;
+                border-radius: 12px;
+                box-shadow: 0 0 30px rgba(0, 242, 254, 0.08);
+            }
+            .menu-buttons {
+                min-width: auto;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            .menu-button {
+                padding: 16px 24px;
+                font-size: 1rem;
+                min-height: 52px;
+                min-width: 100%;
+            }
+            .menu-button:active {
+                transform: scale(0.98);
+                background: var(--color-primary);
+                color: var(--color-darker);
+            }
+            .backstory-skip {
+                padding: 12px 16px;
+                font-size: 0.9rem;
+            }
+            /* Dialogue Box Mobile */
+            .dialogue-box {
+                width: 95%;
+                max-width: 100%;
+                bottom: 20px;
+                padding: 16px;
+            }
+            .character-name {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+            .dialogue-text {
+                font-size: 1rem;
+                line-height: 1.5;
+                min-height: 50px;
+            }
+            .dialogue-continue {
+                font-size: 0.75rem;
+            }
+            /* Chapter Info Mobile */
+            .chapter-info-hud {
+                top: 16px;
+                left: 16px;
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+            .chapter-info-hud h3 {
+                font-size: 1rem;
+                margin-bottom: 4px;
+            }
+            .chapter-info-hud p {
+                font-size: 0.85rem;
+            }
+            /* Puzzle Container Mobile */
+            .puzzle-container {
+                width: 95%;
+                max-width: 100%;
+                padding: 20px 16px;
+            }
+            .puzzle-title {
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+            .puzzle-description {
+                font-size: 0.95rem;
+                margin-bottom: 16px;
+            }
+            .puzzle-grid {
+                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+                gap: 8px;
+                margin: 15px 0;
+            }
+            .puzzle-item {
+                padding: 12px 8px;
+                font-size: 0.95rem;
+                min-height: 52px;
+                border-radius: 6px;
+            }
+            .puzzle-item.selected {
+                transform: scale(1.05);
+            }
+            .puzzle-actions {
+                gap: 10px;
+                flex-wrap: wrap;
+                margin-top: 16px;
+                justify-content: center;
+            }
+            .puzzle-actions .menu-button {
+                flex: 1 1 30%;
+                min-width: 100px;
+                font-size: 0.95rem;
+                padding: 12px 12px;
+            }
+            /* Cipher Wheel Mobile */
+            #cipher-wheel-container {
+                min-height: 280px;
+                margin: 15px 0;
+            }
+            .cipher-wheel {
+                width: 280px;
+                height: 280px;
+            }
+            .cipher-ring-1 {
+                width: 280px !important;
+                height: 280px !important;
+            }
+            .cipher-ring-2 {
+                width: 200px !important;
+                height: 200px !important;
+                top: 40px !important;
+                left: 40px !important;
+            }
+            .cipher-ring-3 {
+                width: 120px !important;
+                height: 120px !important;
+                top: 80px !important;
+                left: 80px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                font-size: 13px;
+            }
+            .game-title {
+                font-size: clamp(1.2rem, 6vw, 2rem);
+            }
+            .game-subtitle {
+                font-size: clamp(0.8rem, 2vw, 1rem);
+            }
+            .ui-modal {
+                padding: 20px 14px;
+            }
+            .menu-button {
+                padding: 14px 20px;
+                font-size: 0.95rem;
+            }
+            .dialogue-box {
+                padding: 12px;
+                bottom: 16px;
+            }
+            .character-name {
+                font-size: 1rem;
+            }
+            .dialogue-text {
+                font-size: 0.9rem;
+                min-height: 45px;
+            }
+            .puzzle-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 6px;
+            }
+            .puzzle-item {
+                padding: 10px 6px;
+                font-size: 0.9rem;
+                min-height: 48px;
+                border-radius: 5px;
+            }
+            .hud-element {
+                border-radius: 10px;
+                padding: 10px 12px;
+            }
+            #cipher-wheel-container {
+                min-height: 260px;
+            }
+            .cipher-wheel {
+                width: 240px;
+                height: 240px;
+            }
+            .cipher-ring-1 {
+                width: 240px !important;
+                height: 240px !important;
+            }
+            .cipher-ring-2 {
+                width: 170px !important;
+                height: 170px !important;
+                top: 35px !important;
+                left: 35px !important;
+            }
+            .cipher-ring-3 {
+                width: 100px !important;
+                height: 100px !important;
+                top: 70px !important;
+                left: 70px !important;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .dialogue-box {
+                bottom: 10px;
+                max-height: 30vh;
+            }
+            .dialogue-text {
+                min-height: auto;
+                max-height: 15vh;
+                overflow-y: auto;
+            }
+            .chapter-info-hud {
+                top: 10px;
+            }
+        }
+
+        /* Landscape orientation optimizations */
+        @media (max-height: 500px) {
+            .game-title {
+                font-size: clamp(1.2rem, 4vw, 1.8rem);
+                margin-bottom: 8px;
+            }
+            .game-subtitle {
+                font-size: clamp(0.8rem, 2vw, 1rem);
+                margin-bottom: 12px;
+            }
+            .ui-modal {
+                padding: 16px 12px;
+            }
+            .menu-buttons {
+                gap: 10px;
+            }
+            .menu-button {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* iPad specific adjustments */
+        @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+            .puzzle-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+            }
+            .puzzle-item {
+                padding: 18px 12px;
+                font-size: 1.1rem;
+                min-height: 60px;
+            }
+            .menu-button {
+                padding: 18px 32px;
+                font-size: 1.2rem;
+                min-height: 60px;
+            }
+        }
+
+        /* Touch States */
+        @media (hover: none) {
+            .menu-button:hover {
+                transform: none;
+            }
+            .puzzle-item:hover {
+                border-color: var(--color-primary);
+                background: rgba(0, 242, 254, 0.1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -212,6 +656,14 @@
     <div id="game-interface" class="game-interface">
         <div id="game-container"></div>
         <div class="game-hud">
+            <div class="hud-top-right">
+                <button class="reopen-btn hide-reopen" id="reopen-dialogue-btn" title="View last dialogue">
+                    <i class="fas fa-comment"></i> View Message
+                </button>
+                <button class="reopen-btn hide-reopen" id="reopen-puzzle-btn" title="View last puzzle">
+                    <i class="fas fa-puzzle-piece"></i> View Puzzle
+                </button>
+            </div>
             <div class="hud-element chapter-info-hud">
                 <h3 id="chapter-title"></h3>
                 <p id="chapter-location"></p>
@@ -259,11 +711,24 @@ class EternityTechGame {
         this.currentDialogues = [];
         this.currentDialogueIndex = 0;
         
+        // History tracking
+        this.lastDialogue = null;
+        this.lastDialogueEmotion = null;
+        this.lastPuzzle = null;
+        this.lastPuzzleData = null;
+        
         this.init();
     }
 
     init() {
         this.setupEventListeners();
+        
+        // Prevent default context menu on long press for mobile
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        
+        // Lock viewport on mobile for better stability
+        document.addEventListener('gesturestart', (e) => e.preventDefault());
+        
         const progressBar = document.querySelector('.loading-progress');
         progressBar.style.width = '100%';
         setTimeout(() => {
@@ -382,8 +847,49 @@ class EternityTechGame {
         }
         document.getElementById('character-name').textContent = dialogue.c;
         document.getElementById('dialogue-text').innerHTML = dialogue.t.replace(/<sanskrit>(.*?)<\/sanskrit>/g, '<span class="sanskrit">$1</span>');
+        
+        // Store last dialogue for reopening
+        this.lastDialogue = dialogue;
+        this.lastDialogueEmotion = dialogue.emotion || null;
+        this.updateReopenButtons();
+        
+        // Add mobile-friendly continuation hint
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const continueElement = dialogueBox.querySelector('.dialogue-continue');
+        if (continueElement) {
+            continueElement.innerHTML = isMobile ? '<p>Tap to continue</p>' : '<p>Press SPACE to continue</p>';
+        }
+        
         dialogueBox.classList.add('active');
         this.setState('dialogue');
+        
+        // Haptic feedback on mobile
+        if (navigator.vibrate && isMobile) {
+            navigator.vibrate(10);
+        }
+    }
+    
+    reopenLastDialogue() {
+        if (this.lastDialogue && this.gameState !== 'dialogue') {
+            this.showDialogue(this.lastDialogue);
+        }
+    }
+    
+    updateReopenButtons() {
+        const dialogueBtn = document.getElementById('reopen-dialogue-btn');
+        const puzzleBtn = document.getElementById('reopen-puzzle-btn');
+        
+        if (this.lastDialogue && this.gameState !== 'dialogue') {
+            dialogueBtn?.classList.remove('hide-reopen');
+        } else {
+            dialogueBtn?.classList.add('hide-reopen');
+        }
+        
+        if (this.lastPuzzleData && this.gameState !== 'puzzle') {
+            puzzleBtn?.classList.remove('hide-reopen');
+        } else {
+            puzzleBtn?.classList.add('hide-reopen');
+        }
     }
 
     nextDialogue() {
@@ -392,19 +898,32 @@ class EternityTechGame {
         if (this.currentDialogueIndex < this.currentDialogues.length) {
             this.showDialogue(this.currentDialogues[this.currentDialogueIndex]);
         } else {
+            document.getElementById('dialogue-box').classList.remove('active');
+            this.updateReopenButtons();
             this.handleSceneEnd();
         }
     }
 
     showPuzzle(puzzleData) {
         this.setState('puzzle');
+        // Store last puzzle for reopening
+        this.lastPuzzleData = JSON.parse(JSON.stringify(puzzleData));
+        this.lastPuzzle = puzzleData.title;
+        this.updateReopenButtons();
         this.puzzleSystem.generatePuzzle(puzzleData);
         document.getElementById('puzzle-container').classList.add('active');
+    }
+    
+    reopenLastPuzzle() {
+        if (this.lastPuzzleData && this.gameState !== 'puzzle') {
+            this.showPuzzle(this.lastPuzzleData);
+        }
     }
 
     closePuzzle() {
         document.getElementById('puzzle-container').classList.remove('active');
         this.setState('playing');
+        this.updateReopenButtons();
     }
 
     completeChapter(chapter) {
@@ -433,21 +952,41 @@ class EternityTechGame {
         this.camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
         this.camera.position.set(0, 3, 8);
 
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        // Mobile optimizations
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) {
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        } else {
+            this.renderer.setPixelRatio(window.devicePixelRatio);
+        }
+        
         this.renderer.setSize(container.clientWidth, container.clientHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFShadowShadowMap;
+        this.renderer.outputEncoding = THREE.sRGBEncoding;
         container.appendChild(this.renderer.domElement);
 
         this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.05;
         this.controls.maxPolarAngle = Math.PI / 2.1;
+        this.controls.autoRotate = true;
+        this.controls.autoRotateSpeed = 2;
+        
+        // Disable pan on mobile for better performance
+        if (isMobile) {
+            this.controls.enablePan = false;
+        }
 
         const ambient = new THREE.AmbientLight(0x404080, 0.5);
         this.scene.add(ambient);
         const keyLight = new THREE.DirectionalLight(primaryColor, 0.8);
         keyLight.position.set(-5, 5, 5);
         keyLight.castShadow = true;
+        keyLight.shadow.mapSize.width = 1024;
+        keyLight.shadow.mapSize.height = 1024;
         this.scene.add(keyLight);
         
         this.createChapterEnvironment(this.currentChapter);
@@ -463,14 +1002,97 @@ class EternityTechGame {
     
     setupEventListeners() {
         document.querySelector('.backstory-skip').addEventListener('click', () => this.showMainMenu());
+        document.querySelector('.backstory-skip').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.showMainMenu();
+        });
+        
         document.getElementById('new-game-btn').addEventListener('click', () => this.startNewGame());
+        document.getElementById('new-game-btn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.startNewGame();
+        });
+        
         document.getElementById('continue-game-btn').addEventListener('click', () => this.continueGame());
+        document.getElementById('continue-game-btn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.continueGame();
+        });
+        
         document.getElementById('check-puzzle-btn').addEventListener('click', () => this.puzzleSystem.checkSolution());
+        document.getElementById('check-puzzle-btn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.puzzleSystem.checkSolution();
+        });
+        
         document.getElementById('reset-puzzle-btn').addEventListener('click', () => this.puzzleSystem.resetPuzzle());
+        document.getElementById('reset-puzzle-btn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.puzzleSystem.resetPuzzle();
+        });
+        
         document.getElementById('close-puzzle-btn').addEventListener('click', () => this.closePuzzle());
+        document.getElementById('close-puzzle-btn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.closePuzzle();
+        });
+        
+        // Reopen buttons
+        document.getElementById('reopen-dialogue-btn').addEventListener('click', () => this.reopenLastDialogue());
+        document.getElementById('reopen-dialogue-btn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.reopenLastDialogue();
+        });
+        
+        document.getElementById('reopen-puzzle-btn').addEventListener('click', () => this.reopenLastPuzzle());
+        document.getElementById('reopen-puzzle-btn').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.reopenLastPuzzle();
+        });
+        
+        // Touch events for dialogue advancement
+        const dialogueBox = document.getElementById('dialogue-box');
+        dialogueBox.addEventListener('touchend', (e) => {
+            if (this.gameState === 'dialogue') {
+                e.preventDefault();
+                this.nextDialogue();
+            }
+        });
+        
+        // Touch events for puzzle grid items
+        document.addEventListener('touchend', (e) => {
+            if (e.target.classList && e.target.classList.contains('puzzle-item')) {
+                e.preventDefault();
+                const type = this.puzzleSystem.currentPuzzle?.type || '';
+                this.puzzleSystem.selectGridItem(e.target, type);
+            }
+        });
+        
+        // Touch events for cipher rings
+        document.addEventListener('touchend', (e) => {
+            if (e.target.classList && e.target.classList.contains('cipher-ring')) {
+                e.preventDefault();
+                const ringId = e.target.id;
+                const ringIndex = parseInt(ringId.replace('cipher-ring-', '')) - 1;
+                this.puzzleSystem.rotateRing(ringIndex);
+            }
+        });
         
         window.addEventListener('keydown', (e) => this.handleKeyPress(e));
         window.addEventListener('resize', () => this.onWindowResize());
+        window.addEventListener('orientationchange', () => this.onWindowResize());
+        
+        // Prevent default touch behaviors
+        document.addEventListener('touchmove', (e) => {
+            // Allow scrolling in dialogue and content areas
+            if (!e.target.closest('.dialogue-box') && 
+                !e.target.closest('.puzzle-container') &&
+                !e.target.closest('.ui-modal')) {
+                if (document.getElementById('game-interface')?.classList.contains('active')) {
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
     }
 
     handleKeyPress(e) {
@@ -479,8 +1101,13 @@ class EternityTechGame {
             this.nextDialogue();
         }
         if (e.code === 'Escape' && (this.gameState === 'playing' || this.gameState === 'puzzle')) {
+            e.preventDefault();
             this.showMainMenu();
         }
+    }
+    
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
     
     onWindowResize() {
@@ -489,6 +1116,13 @@ class EternityTechGame {
         this.camera.aspect = container.clientWidth / container.clientHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(container.clientWidth, container.clientHeight);
+        
+        // Adjust UI elements for new viewport
+        const isMobile = this.isMobileDevice();
+        if (isMobile) {
+            // Force re-layout on orientation change
+            document.body.style.zoom = 1;
+        }
     }
 
     initChapterData() {
@@ -669,24 +1303,37 @@ class PuzzleSystem {
             const itemEl = document.createElement('div');
             itemEl.className = 'puzzle-item';
             itemEl.innerHTML = `<span class="${data.type === 'sanskrit_sequence' ? 'sanskrit' : ''}">${itemText}</span>`;
-            itemEl.onclick = () => this.selectGridItem(itemEl, data.type);
+            
+            // Click handler
+            itemEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.selectGridItem(itemEl, data.type);
+            });
+            
+            // Touch handler
+            itemEl.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.selectGridItem(itemEl, data.type);
+            });
+            
             container.appendChild(itemEl);
         });
     }
 
     selectGridItem(element, type) {
         if (type === 'path_choice') {
-            this.selectedItems = [element.textContent];
+            this.selectedItems = [element.textContent.trim()];
             document.querySelectorAll('.puzzle-item').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
         } else {
+            const itemText = element.textContent.trim();
             const alreadySelected = element.classList.contains('selected');
             if (alreadySelected) {
                 element.classList.remove('selected');
-                this.selectedItems = this.selectedItems.filter(item => item !== element.textContent);
+                this.selectedItems = this.selectedItems.filter(item => item !== itemText);
             } else {
                 element.classList.add('selected');
-                this.selectedItems.push(element.textContent);
+                this.selectedItems.push(itemText);
             }
         }
     }
@@ -694,10 +1341,14 @@ class PuzzleSystem {
     generateCipherWheelPuzzle(data, container) {
         container.style.display = 'flex';
         this.ringRotations = [0, 0, 0];
+        this.touchStartAngle = [0, 0, 0]; // Track touch start angles
+        
         data.rings.forEach((ringSymbols, i) => {
             const ringEl = document.getElementById(`cipher-ring-${i + 1}`);
             ringEl.innerHTML = '';
             ringEl.style.transform = `rotate(0deg)`;
+            ringEl.style.cursor = 'pointer';
+            
             ringSymbols.forEach((symbol, j) => {
                 const angle = (j / ringSymbols.length) * 360;
                 const symbolEl = document.createElement('div');
@@ -707,8 +1358,66 @@ class PuzzleSystem {
                 symbolEl.style.transform = `rotate(${angle}deg) translate(0, -${radius}px) rotate(-${angle}deg)`;
                 ringEl.appendChild(symbolEl);
             });
-            ringEl.onclick = () => this.rotateRing(i);
+            
+            // Click handler
+            ringEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.rotateRing(i);
+            });
+            
+            // Touch handlers for swipe rotation
+            let touchStartX = 0;
+            let touchStartY = 0;
+            ringEl.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+            }, { passive: false });
+            
+            ringEl.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+            }, { passive: false });
+            
+            ringEl.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                const touch = e.changedTouches[0];
+                const deltaX = touch.clientX - touchStartX;
+                const deltaY = touch.clientY - touchStartY;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                
+                // If swipe distance is sufficient, treat as swipe
+                if (distance > 30) {
+                    // Determine direction
+                    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                        // Horizontal swipe
+                        if (deltaX > 0) {
+                            this.rotateRing(i);
+                        } else {
+                            this.rotateRingBackward(i);
+                        }
+                    } else {
+                        // Vertical swipe
+                        if (deltaY > 0) {
+                            this.rotateRing(i);
+                        } else {
+                            this.rotateRingBackward(i);
+                        }
+                    }
+                } else {
+                    // Treat as tap - rotate once
+                    this.rotateRing(i);
+                }
+            }, { passive: false });
         });
+    }
+
+    rotateRingBackward(ringIndex) {
+        const ringEl = document.getElementById(`cipher-ring-${ringIndex + 1}`);
+        const symbolsInRing = this.currentPuzzle.rings[ringIndex].length;
+        this.ringRotations[ringIndex] = (this.ringRotations[ringIndex] - 1 + symbolsInRing) % symbolsInRing;
+        const rotationAngle = (this.ringRotations[ringIndex] / symbolsInRing) * 360;
+        ringEl.style.transform = `rotate(${rotationAngle}deg)`;
     }
 
     rotateRing(ringIndex) {
@@ -736,10 +1445,18 @@ class PuzzleSystem {
         }
         
         if (isCorrect) {
+            // Haptic feedback for correct answer
+            if (navigator.vibrate) {
+                navigator.vibrate([50, 30, 50]);
+            }
             this.game.closePuzzle();
             const sceneData = this.game.chapterData[this.game.currentChapter].scenes[this.game.currentScene];
             if (sceneData.action) sceneData.action();
         } else {
+            // Haptic feedback for wrong answer
+            if (navigator.vibrate) {
+                navigator.vibrate([100]);
+            }
             const puzzleContainer = document.getElementById('puzzle-container');
             puzzleContainer.classList.add('incorrect');
             setTimeout(()=> puzzleContainer.classList.remove('incorrect'), 500);
