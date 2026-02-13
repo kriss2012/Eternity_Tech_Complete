@@ -1,5 +1,7 @@
 # 🎮 Eternity Tech: The Padmanabha Enigma
 
+# Live Demo https://kriss2012.github.io/Eternity_Tech_Complete/
+
 **A Quantum Adventure Through Ancient Wisdom and Modern Technology**
 
 ---
