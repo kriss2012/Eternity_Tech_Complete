@@ -1,5 +1,7 @@
 # 🎮 Eternity Tech: The Padmanabha Enigma
 
+# Downlode Game Apk From Repo :- https://github.com/kriss2012/Eternity_Tech_Complete/blob/main/app-debug.apk
+
 # Live Demo https://kriss2012.github.io/Eternity_Tech_Complete/
 
 **A Quantum Adventure Through Ancient Wisdom and Modern Technology**
