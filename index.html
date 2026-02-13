@@ -148,30 +148,33 @@
         }
         
         .hud-top-right {
-            top: 20px;
+            top: 80px;
             right: 20px;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            max-width: 150px;
+            max-width: 170px;
             z-index: 150;
+            flex-direction: column;
         }
         
         .reopen-btn {
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: linear-gradient(135deg, rgba(74, 255, 209, 0.2), rgba(0, 242, 254, 0.2));
             border: 1px solid var(--color-accent);
             color: var(--color-accent);
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            min-height: 36px;
-            min-width: 80px;
+            min-height: 40px;
+            min-width: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
+            white-space: nowrap;
+            text-align: center;
         }
         
         .reopen-btn:hover {
@@ -183,7 +186,11 @@
         }
         
         .reopen-btn.hide-reopen {
-            display: none;
+            display: none !important;
+        }
+        
+        .reopen-btn:active {
+            transform: scale(0.95);
         }
         .chapter-info-hud { top: 20px; left: 20px; }
         .chapter-info-hud h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--color-accent); font-family: 'Orbitron'; }
@@ -240,15 +247,16 @@
 
         @media (max-width: 480px) {
             .hud-top-right {
-                top: 12px;
+                top: 80px;
                 right: 12px;
-                gap: 6px;
+                gap: 8px;
+                max-width: 160px;
             }
             .reopen-btn {
-                padding: 5px 8px;
-                font-size: 0.65rem;
-                min-height: 28px;
-                min-width: 60px;
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                min-height: 36px;
+                min-width: 85px;
             }
             .mobile-hint {
                 display: block;
@@ -716,6 +724,7 @@ class EternityTechGame {
         this.lastDialogueEmotion = null;
         this.lastPuzzle = null;
         this.lastPuzzleData = null;
+        this.puzzleSolved = false; // Track if current puzzle was solved
         
         this.init();
     }
@@ -885,7 +894,7 @@ class EternityTechGame {
             dialogueBtn?.classList.add('hide-reopen');
         }
         
-        if (this.lastPuzzleData && this.gameState !== 'puzzle') {
+        if (this.lastPuzzleData && this.gameState !== 'puzzle' && !this.puzzleSolved) {
             puzzleBtn?.classList.remove('hide-reopen');
         } else {
             puzzleBtn?.classList.add('hide-reopen');
@@ -906,6 +915,7 @@ class EternityTechGame {
 
     showPuzzle(puzzleData) {
         this.setState('puzzle');
+        this.puzzleSolved = false; // Reset puzzle solved status
         // Store last puzzle for reopening
         this.lastPuzzleData = JSON.parse(JSON.stringify(puzzleData));
         this.lastPuzzle = puzzleData.title;
@@ -923,6 +933,11 @@ class EternityTechGame {
     closePuzzle() {
         document.getElementById('puzzle-container').classList.remove('active');
         this.setState('playing');
+        // Only keep puzzle data for reopen if it wasn't solved
+        if (this.puzzleSolved) {
+            this.lastPuzzleData = null;
+            this.lastPuzzle = null;
+        }
         this.updateReopenButtons();
     }
 
@@ -1449,9 +1464,11 @@ class PuzzleSystem {
             if (navigator.vibrate) {
                 navigator.vibrate([50, 30, 50]);
             }
+            this.game.puzzleSolved = true;
+            this.game.lastPuzzleData = null;
             this.game.closePuzzle();
             const sceneData = this.game.chapterData[this.game.currentChapter].scenes[this.game.currentScene];
-            if (sceneData.action) sceneData.action();
+            if (sceneData && sceneData.action) sceneData.action();
         } else {
             // Haptic feedback for wrong answer
             if (navigator.vibrate) {
