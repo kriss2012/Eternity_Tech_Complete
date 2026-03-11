@@ -328,7 +328,7 @@ Everything is ready. Time to start your quantum adventure!
     Ready? Let's Begin!
 ```
 
-**Happy Gaming! 🎮**
+**Happy Gaming By Krishna! 🎮**
 
 ---
 
