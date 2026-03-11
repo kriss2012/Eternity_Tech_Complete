@@ -833,4 +833,3 @@ For issues or questions:
 
 **Made with 🎮 and 🧠 - Enjoy your quantum adventure!**
 
-*Last Updated: February 2026*
